@@ -49,96 +49,6 @@ class LecturerPostPutDeleteView(APIView):
         return Response(status=201)
 
 
-class DateListView(generics.ListAPIView):
-    serializer_class = DateSerializer
-
-    # permission_classes = [permissions.IsAuthenticated]
-
-    def get_queryset(self):
-        return ConvenientDate.objects.all()
-
-
-class DateRetrieveView(generics.RetrieveUpdateDestroyAPIView):
-    serializer_class = DatePostPutDeleteSerializer
-
-    # permission_classes = [permissions.IsAuthenticated]
-
-    def get_queryset(self):
-        return ConvenientDate.objects.all()
-
-    def put_queryset(self, request):
-        convenient_date = ConvenientDate
-        serializer = DatePostPutDeleteSerializer(convenient_date, data=request.data)
-
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-
-        return Response(serializer.errors, status=400)
-
-    def delete_queryset(self, request):
-        convenient_date = ConvenientDate.objects.all()
-        convenient_date.delete()
-        return Response(status=204)
-
-
-class DatePostPutDeleteView(APIView):
-    # permission_classes = [permissions.IsAuthenticated]
-
-    def post(self, request):
-        convenient_date = DatePostPutDeleteSerializer(data=request.data)
-
-        if convenient_date.is_valid():
-            convenient_date.save()
-            return Response(status=200)
-        return Response(convenient_date.errors, status=400)
-
-
-class TimeListView(generics.ListAPIView):
-    serializer_class = TimeSerializer
-
-    # permission_classes = [permissions.IsAuthenticated]
-
-    def get_queryset(self):
-        return ConvenientTime.objects.all()
-
-
-class TimePostPutDeleteView(APIView):
-    # permission_classes = [permissions.IsAuthenticated]
-
-    def post(self, request):
-        convenient_time = TimePostPutDeleteSerializer(data=request.data)
-
-        if convenient_time.is_valid():
-            convenient_time.save()
-            return Response(status=200)
-        return Response(convenient_time.errors, status=400)
-
-
-class TimeRetrieveView(generics.RetrieveUpdateDestroyAPIView):
-    serializer_class = TimePostPutDeleteSerializer
-
-    # permission_classes = [permissions.IsAuthenticated]
-
-    def get_queryset(self):
-        return ConvenientTime.objects.all()
-
-    def put_queryset(self, request):
-        convenient_time = ConvenientTime
-        serializer = TimePostPutDeleteSerializer(convenient_time, data=request.data)
-
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-
-        return Response(serializer.errors, status=400)
-
-    def delete_queryset(self, request):
-        convenient_time = ConvenientTime.objects.all()
-        convenient_time.delete()
-        return Response(status=204)
-
-
 class AuditoriumListView(generics.ListAPIView):
     serializer_class = AuditoriumSerializer
 
@@ -146,18 +56,6 @@ class AuditoriumListView(generics.ListAPIView):
 
     def get_queryset(self):
         return Auditorium.objects.all()
-
-
-class AuditoriumPostPutDeleteView(APIView):
-    # permission_classes = [permissions.IsAuthenticated]
-
-    def post(self, request):
-        auditorium = AuditoriumPostPutDeleteSerializer(data=request.data)
-
-        if auditorium.is_valid():
-            auditorium.save()
-            return Response(status=200)
-        return Response(auditorium.errors, status=400)
 
 
 class AuditoriumRetrieveView(generics.RetrieveUpdateDestroyAPIView):
@@ -178,6 +76,18 @@ class AuditoriumRetrieveView(generics.RetrieveUpdateDestroyAPIView):
         return Response(serializer.errors, status=400)
 
 
+class AuditoriumPostPutDeleteView(APIView):
+    # permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
+        auditorium = AuditoriumPostPutDeleteSerializer(data=request.data)
+
+        if auditorium.is_valid():
+            auditorium.save()
+            return Response(status=200)
+        return Response(auditorium.errors, status=400)
+
+
 class FacultyListView(generics.ListAPIView):
     serializer_class = FacultySerializer
 
@@ -185,18 +95,6 @@ class FacultyListView(generics.ListAPIView):
 
     def get_queryset(self):
         return Faculty.objects.all()
-
-
-class FacultyPostPutDeleteView(APIView):
-    # permission_classes = [permissions.IsAuthenticated]
-
-    def post(self, request):
-        faculty = FacultyPostPutDeleteSerializer(data=request.data)
-
-        if faculty.is_valid():
-            faculty.save()
-            return Response(status=200)
-        return Response(faculty.errors, status=400)
 
 
 class FacultyRetrieveView(generics.RetrieveUpdateDestroyAPIView):
@@ -216,16 +114,16 @@ class FacultyRetrieveView(generics.RetrieveUpdateDestroyAPIView):
         return Response(serializer.errors, status=400)
 
 
-class PositionsPostPutDeleteView(APIView):
+class FacultyPostPutDeleteView(APIView):
     # permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request):
-        position = PositionsPostPutDeleteSerializer(data=request.data)
+        faculty = FacultyPostPutDeleteSerializer(data=request.data)
 
-        if position.is_valid():
-            position.save()
+        if faculty.is_valid():
+            faculty.save()
             return Response(status=200)
-        return Response(position.errors, status=400)
+        return Response(faculty.errors, status=400)
 
 
 class PositionsRetrieveView(generics.RetrieveUpdateDestroyAPIView):
@@ -245,16 +143,16 @@ class PositionsRetrieveView(generics.RetrieveUpdateDestroyAPIView):
         return Response(serializer.errors, status=400)
 
 
-class DepartmentPostPutDeleteView(APIView):
+class PositionsPostPutDeleteView(APIView):
     # permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request):
-        department = DepartmentPostPutDeleteSerializer(data=request.data)
+        position = PositionsPostPutDeleteSerializer(data=request.data)
 
-        if department.is_valid():
-            department.save()
+        if position.is_valid():
+            position.save()
             return Response(status=200)
-        return Response(department.errors, status=400)
+        return Response(position.errors, status=400)
 
 
 class DepartmentRetrieveView(generics.RetrieveUpdateDestroyAPIView):
@@ -274,16 +172,25 @@ class DepartmentRetrieveView(generics.RetrieveUpdateDestroyAPIView):
         return Response(serializer.errors, status=400)
 
 
-class GroupsPostPutDeleteView(APIView):
+class DepartmentPostPutDeleteView(APIView):
     # permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request):
-        groups = GroupsPostPutDeleteSerializer(data=request.data)
+        department = DepartmentPostPutDeleteSerializer(data=request.data)
 
-        if groups.is_valid():
-            groups.save()
+        if department.is_valid():
+            department.save()
             return Response(status=200)
-        return Response(groups.errors, status=400)
+        return Response(department.errors, status=400)
+
+
+class GroupsListView(generics.ListAPIView):
+    serializer_class = GroupsSerializer
+
+    # permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return Groups.objects.all()
 
 
 class GroupsRetrieveView(generics.RetrieveUpdateDestroyAPIView):
@@ -308,16 +215,16 @@ class GroupsRetrieveView(generics.RetrieveUpdateDestroyAPIView):
         return Response(status=204)
 
 
-class TypeOfAuditoriumPostPutDeleteView(APIView):
+class GroupsPostPutDeleteView(APIView):
     # permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request):
-        typeofauditorium = TypeOfAuditoriumPostPutDeleteSerializer(data=request.data)
+        groups = GroupsPostPutDeleteSerializer(data=request.data)
 
-        if typeofauditorium.is_valid():
-            typeofauditorium.save()
+        if groups.is_valid():
+            groups.save()
             return Response(status=200)
-        return Response(typeofauditorium.errors, status=400)
+        return Response(groups.errors, status=400)
 
 
 class TypeOfAuditoriumRetrieveView(generics.RetrieveUpdateDestroyAPIView):
@@ -337,16 +244,16 @@ class TypeOfAuditoriumRetrieveView(generics.RetrieveUpdateDestroyAPIView):
         return Response(serializer.errors, status=400)
 
 
-class UniversityBuildingPostPutDeleteView(APIView):
+class TypeOfAuditoriumPostPutDeleteView(APIView):
     # permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request):
-        building = UniversityBuildingPostPutDeleteSerializer(data=request.data)
+        typeofauditorium = TypeOfAuditoriumPostPutDeleteSerializer(data=request.data)
 
-        if building.is_valid():
-            building.save()
+        if typeofauditorium.is_valid():
+            typeofauditorium.save()
             return Response(status=200)
-        return Response(building.errors, status=400)
+        return Response(typeofauditorium.errors, status=400)
 
 
 class UniversityBuildingRetrieveView(generics.RetrieveUpdateDestroyAPIView):
@@ -366,16 +273,25 @@ class UniversityBuildingRetrieveView(generics.RetrieveUpdateDestroyAPIView):
         return Response(serializer.errors, status=400)
 
 
-class UsersPostPutDeleteView(APIView):
+class UniversityBuildingPostPutDeleteView(APIView):
     # permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request):
-        users = UsersPostPutDeleteSerializer(data=request.data)
+        building = UniversityBuildingPostPutDeleteSerializer(data=request.data)
 
-        if users.is_valid():
-            users.save()
+        if building.is_valid():
+            building.save()
             return Response(status=200)
-        return Response(users.errors, status=400)
+        return Response(building.errors, status=400)
+
+
+class UsersListView(generics.ListAPIView):
+    serializer_class = UsersSerializer
+
+    # permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return Users.objects.all()
 
 
 class UsersRetrieveView(generics.RetrieveUpdateDestroyAPIView):
@@ -400,6 +316,18 @@ class UsersRetrieveView(generics.RetrieveUpdateDestroyAPIView):
         return Response(status=204)
 
 
+class UsersPostPutDeleteView(APIView):
+    # permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
+        users = UsersPostPutDeleteSerializer(data=request.data)
+
+        if users.is_valid():
+            users.save()
+            return Response(status=200)
+        return Response(users.errors, status=400)
+
+
 class StudentsListView(generics.ListAPIView):
     serializer_class = StudentsSerializer
 
@@ -407,18 +335,6 @@ class StudentsListView(generics.ListAPIView):
 
     def get_queryset(self):
         return Students.objects.all()
-
-
-class StudentsPostPutDeleteView(APIView):
-    # permission_classes = [permissions.IsAuthenticated]
-
-    def post(self, request):
-        students = StudentsPostPutDeleteSerializer(data=request.data)
-
-        if students.is_valid():
-            students.save()
-            return Response(status=200)
-        return Response(students.errors, status=400)
 
 
 class StudentsRetrieveView(generics.RetrieveUpdateDestroyAPIView):
@@ -443,6 +359,60 @@ class StudentsRetrieveView(generics.RetrieveUpdateDestroyAPIView):
         return Response(status=204)
 
 
+class StudentsPostPutDeleteView(APIView):
+    # permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
+        students = StudentsPostPutDeleteSerializer(data=request.data)
+
+        if students.is_valid():
+            students.save()
+            return Response(status=200)
+        return Response(students.errors, status=400)
+
+
+class DisciplineListView(generics.ListAPIView):
+    serializer_class = DisciplineSerializer
+    # permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return Discipline.objects.all()
+
+
+class DisciplineRetrieveView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = DisciplinePostPutDeleteSerializer
+
+    # permission_classes = [permissions.IsAuthenticated]
+    def get_queryset(self):
+        return Discipline.objects.all()
+
+    def put_queryset(self, request):
+        discipline = Discipline.objects.all()
+        serializer = DisciplinePostPutDeleteSerializer(discipline, data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=400)
+
+    def delete_queryset(self, request):
+        discipline = Discipline.objects.all()
+        discipline.delete()
+        return Response(status=204)
+
+
+class DisciplinePostPutDeleteView(APIView):
+    # permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
+        discipline = DisciplinePostPutDeleteSerializer(data=request.data)
+
+        if discipline.is_valid():
+            discipline.save()
+            return Response(status=200)
+        return Response(discipline.errors, status=400)
+
+
 class ConsultationListView(generics.ListAPIView):
     serializer_class = ConsultationSerializer
 
@@ -450,18 +420,6 @@ class ConsultationListView(generics.ListAPIView):
 
     def get_queryset(self):
         return Consultation.objects.all()
-
-
-class ConsultationPostPutDeleteView(APIView):
-    # permission_classes = [permissions.IsAuthenticated]
-
-    def post(self, request):
-        consultation = ConsultationPostPutDeleteSerializer(data=request.data)
-
-        if consultation.is_valid():
-            consultation.save()
-            return Response(status=200)
-        return Response(consultation.errors, status=400)
 
 
 class ConsultationRetrieveView(generics.RetrieveUpdateDestroyAPIView):
@@ -484,3 +442,59 @@ class ConsultationRetrieveView(generics.RetrieveUpdateDestroyAPIView):
         consultation = Consultation.objects.all()
         consultation.delete()
         return Response(status=204)
+
+
+class ConsultationPostPutDeleteView(APIView):
+    # permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
+        consultation = ConsultationPostPutDeleteSerializer(data=request.data)
+
+        if consultation.is_valid():
+            consultation.save()
+            return Response(status=200)
+        return Response(consultation.errors, status=400)
+
+
+class StudentrecordListView(generics.ListAPIView):
+    serializer_class = StudentrecordSerializer
+
+    # permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return StudentRecord.objects.all()
+
+
+class StudentrecordRetrieveView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = StudentrecordPostPutDeleteSerializer
+
+    # permission_classes = [permissions.IsAuthenticated]
+    def get_queryset(self):
+        return StudentRecord.objects.all()
+
+    def put_queryset(self, request):
+        studentrecord = StudentRecord.objects.all()
+        serializer = StudentrecordPostPutDeleteSerializer(studentrecord, data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=400)
+
+    def delete_queryset(self, request):
+        studentrecord = StudentRecord.objects.all()
+        studentrecord.delete()
+        return Response(status=204)
+
+
+class StudentrecordPostPutDeleteView(APIView):
+    # permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
+        studentrecord = StudentrecordPostPutDeleteSerializer(data=request.data)
+
+        if studentrecord.is_valid():
+            studentrecord.save()
+            return Response(status=200)
+        return Response(studentrecord.errors, status=400)
+

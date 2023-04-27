@@ -20,40 +20,6 @@ class LecturerPostPutDeleteSerializer(ModelSerializer):
         fields = '__all__'
 
 
-class DatePostPutDeleteSerializer(ModelSerializer):
-    class Meta:
-        model = ConvenientDate
-        fields = '__all__'
-
-
-class DateSerializer(ModelSerializer):
-    lecturerid = SlugRelatedField(slug_field='last_name_lecturer', read_only=True)
-
-    class Meta:
-        model = ConvenientDate
-        fields = '__all__'
-
-
-class TimePostPutDeleteSerializer(ModelSerializer):
-    class Meta:
-        model = ConvenientTime
-        fields = '__all__'
-
-
-class TimeSerializer(ModelSerializer):
-    lecturerid = SlugRelatedField(slug_field='last_name_lecturer', read_only=True)
-
-    class Meta:
-        model = ConvenientTime
-        fields = '__all__'
-
-
-class AuditoriumPostPutDeleteSerializer(ModelSerializer):
-    class Meta:
-        model = Auditorium
-        fields = '__all__'
-
-
 class AuditoriumSerializer(ModelSerializer):
     type_of_auditoriumid = SlugRelatedField(slug_field='name_of_auditorium', read_only=True)
     university_buildingid = SlugRelatedField(slug_field='name_of_building', read_only=True)
@@ -63,14 +29,19 @@ class AuditoriumSerializer(ModelSerializer):
         fields = '__all__'
 
 
-class FacultyPostPutDeleteSerializer(ModelSerializer):
+class AuditoriumPostPutDeleteSerializer(ModelSerializer):
+    class Meta:
+        model = Auditorium
+        fields = '__all__'
+
+
+class FacultySerializer(ModelSerializer):
     class Meta:
         model = Faculty
         fields = '__all__'
 
 
-class FacultySerializer(ModelSerializer):
-
+class FacultyPostPutDeleteSerializer(ModelSerializer):
     class Meta:
         model = Faculty
         fields = '__all__'
@@ -85,6 +56,12 @@ class PositionsPostPutDeleteSerializer(ModelSerializer):
 class DepartmentPostPutDeleteSerializer(ModelSerializer):
     class Meta:
         model = Department
+        fields = '__all__'
+
+
+class GroupsSerializer(ModelSerializer):
+    class Meta:
+        model = Groups
         fields = '__all__'
 
 
@@ -106,15 +83,15 @@ class UniversityBuildingPostPutDeleteSerializer(ModelSerializer):
         fields = '__all__'
 
 
-class UsersPostPutDeleteSerializer(ModelSerializer):
+class UsersSerializer(ModelSerializer):
     class Meta:
         model = Users
         fields = '__all__'
 
 
-class StudentsPostPutDeleteSerializer(ModelSerializer):
+class UsersPostPutDeleteSerializer(ModelSerializer):
     class Meta:
-        model = Students
+        model = Users
         fields = '__all__'
 
 
@@ -126,20 +103,52 @@ class StudentsSerializer(ModelSerializer):
         fields = '__all__'
 
 
-class ConsultationPostPutDeleteSerializer(ModelSerializer):
+class StudentsPostPutDeleteSerializer(ModelSerializer):
     class Meta:
-        model = Consultation
+        model = Students
+        fields = '__all__'
+
+
+class DisciplineSerializer(ModelSerializer):
+
+    class Meta:
+        model = Discipline
+        fields = '__all__'
+
+
+class DisciplinePostPutDeleteSerializer(ModelSerializer):
+    class Meta:
+        model = Discipline
         fields = '__all__'
 
 
 class ConsultationSerializer(ModelSerializer):
     auditoriumid = SlugRelatedField(slug_field='number_of_auditorium', read_only=True)
     lecturerid = SlugRelatedField(slug_field='last_name_lecturer', read_only=True)
-    studentid = SlugRelatedField(slug_field='last_name_student', read_only=True)
-    studentid = SlugRelatedField(slug_field='last_name_student', read_only=True)
-    convinient_dateid = SlugRelatedField(slug_field='date', read_only=True)
-    #convinient_timeid = SlugRelatedField(slug_field='time', read_only=True)
+    groupid = SlugRelatedField(slug_field='number_of_group', read_only=True)
+    disciplineid = SlugRelatedField(slug_field='name_of_discipline', read_only=True)
 
     class Meta:
         model = Consultation
         fields = '__all__'
+
+
+class ConsultationPostPutDeleteSerializer(ModelSerializer):
+    class Meta:
+        model = Consultation
+        fields = '__all__'
+
+
+class StudentrecordSerializer(ModelSerializer):
+    studentid = SlugRelatedField(slug_field='last_name_student', read_only=True)
+
+    class Meta:
+        model = StudentRecord
+        fields = '__all__'
+
+
+class StudentrecordPostPutDeleteSerializer(ModelSerializer):
+    class Meta:
+        model = StudentRecord
+        fields = '__all__'
+

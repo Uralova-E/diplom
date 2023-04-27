@@ -10,20 +10,31 @@ from django.db import models
 
 class Positions(models.Model):
     positionid = models.BigAutoField(db_column='PositionID', primary_key=True)  # Field name made lowercase.
-    title_of_position = models.TextField(db_column='Title_of_position', blank=True, null=True)  # Field name made lowercase.
-    salary = models.TextField(db_column='Salary', blank=True, null=True)  # Field name made lowercase. This field type is a guess.
+    title_of_position = models.CharField(db_column='Title_of_position', max_length=50)  # Field name made lowercase.
 
     class Meta:
         managed = False
         db_table = 'Positions'
 
 
+class StudentRecord(models.Model):
+    student_recordid = models.BigAutoField(db_column='Student_recordID', primary_key=True)  # Field name made lowercase.
+    consultationid = models.ForeignKey('Consultation', models.DO_NOTHING, db_column='consultationID')  # Field name made lowercase.
+    studentid = models.ForeignKey('Students', models.DO_NOTHING, db_column='studentID')  # Field name made lowercase.
+    visiting = models.CharField(db_column='Visiting', max_length=3, blank=True, null=True)  # Field name made lowercase.
+    notes_of_lecturer = models.CharField(db_column='Notes_of_lecturer', max_length=400, blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Student record'
+
+
 class Users(models.Model):
     userid = models.BigAutoField(db_column='UserID', primary_key=True)  # Field name made lowercase.
     lecturerid = models.ForeignKey('Lecturer', models.DO_NOTHING, db_column='lecturerID', blank=True, null=True)  # Field name made lowercase.
     studentid = models.ForeignKey('Students', models.DO_NOTHING, db_column='studentID', blank=True, null=True)  # Field name made lowercase.
-    login = models.CharField(db_column='Login', max_length=50, blank=True, null=True)  # Field name made lowercase.
-    password = models.CharField(db_column='Password', max_length=50, blank=True, null=True)  # Field name made lowercase.
+    login = models.CharField(db_column='Login', max_length=50)  # Field name made lowercase.
+    password = models.CharField(db_column='Password', max_length=50)  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -34,8 +45,8 @@ class Auditorium(models.Model):
     auditoriumid = models.BigAutoField(primary_key=True)
     type_of_auditoriumid = models.ForeignKey('TypeOfAuditorium', models.DO_NOTHING, db_column='type_of_auditoriumid')
     university_buildingid = models.ForeignKey('UniversityBuilding', models.DO_NOTHING, db_column='university_buildingid')
-    number_of_auditorium = models.IntegerField()
-    capacity = models.IntegerField(blank=True, null=True)
+    number_of_auditorium = models.CharField(max_length=8)
+    capacity = models.IntegerField()
 
     class Meta:
         managed = False
@@ -111,48 +122,52 @@ class AuthUserUserPermissions(models.Model):
         unique_together = (('user', 'permission'),)
 
 
+class AuthtokenToken(models.Model):
+    key = models.CharField(primary_key=True, max_length=40)
+    created = models.DateTimeField()
+    user = models.OneToOneField(AuthUser, models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'authtoken_token'
+
+
 class Consultation(models.Model):
     consultationid = models.BigAutoField(primary_key=True)
     auditoriumid = models.ForeignKey(Auditorium, models.DO_NOTHING, db_column='auditoriumid')
     lecturerid = models.ForeignKey('Lecturer', models.DO_NOTHING, db_column='lecturerid')
-    studentid = models.ForeignKey('Students', models.DO_NOTHING, db_column='studentid')
-    topic = models.CharField(max_length=300, blank=True, null=True)
-    convinient_dateid = models.ForeignKey('ConvenientDate', models.DO_NOTHING, db_column='convinient_dateID')  # Field name made lowercase.
-    convinient_timeid = models.ForeignKey('ConvenientTime', models.DO_NOTHING, db_column='convinient_timeID')  # Field name made lowercase.
+    topic = models.CharField(max_length=300)
+    date = models.DateField(db_column='Date')  # Field name made lowercase.
+    start_time = models.TimeField(db_column='Start_time')  # Field name made lowercase.
+    end_time = models.TimeField(db_column='End_time')  # Field name made lowercase.
+    groupid = models.ForeignKey('Groups', models.DO_NOTHING, db_column='groupid')
+    was_conducted = models.CharField(db_column='Was_conducted', max_length=3, blank=True, null=True)  # Field name made lowercase.
+    notes = models.CharField(db_column='Notes', max_length=400, blank=True, null=True)  # Field name made lowercase.
+    disciplineid = models.ForeignKey('Discipline', models.DO_NOTHING, db_column='disciplineID', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
         db_table = 'consultation'
 
 
-class ConvenientDate(models.Model):
-    convenient_dateid = models.BigAutoField(db_column='convenient_dateID', primary_key=True)  # Field name made lowercase.
-    lecturerid = models.ForeignKey('Lecturer', models.DO_NOTHING, db_column='lecturerID')  # Field name made lowercase.
-    date = models.DateField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'convenient_date'
-
-
-class ConvenientTime(models.Model):
-    convenient_timeid = models.BigAutoField(db_column='convenient_timeID', primary_key=True)  # Field name made lowercase.
-    lecturerid = models.ForeignKey('Lecturer', models.DO_NOTHING, db_column='lecturerID')  # Field name made lowercase.
-    time = models.TimeField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'convenient_time'
-
-
 class Department(models.Model):
     departmentid = models.BigAutoField(db_column='departmentID', primary_key=True)  # Field name made lowercase.
-    title_of_department = models.CharField(db_column='Title_of_department', max_length=350, blank=True, null=True)  # Field name made lowercase.
-    abbreviation = models.CharField(max_length=5, blank=True, null=True)
+    title_of_department = models.CharField(db_column='Title_of_department', max_length=350)  # Field name made lowercase.
+    abbreviation = models.CharField(max_length=5)
+    facultyid = models.ForeignKey('Faculty', models.DO_NOTHING, db_column='facultyID')  # Field name made lowercase.
 
     class Meta:
         managed = False
         db_table = 'department'
+
+
+class Discipline(models.Model):
+    disciplineid = models.BigIntegerField(db_column='disciplineID', primary_key=True)  # Field name made lowercase.
+    name_of_discipline = models.CharField(db_column='Name_of_discipline', max_length=300)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'discipline'
 
 
 class DjangoAdminLog(models.Model):
@@ -203,6 +218,7 @@ class DjangoSession(models.Model):
 class Faculty(models.Model):
     facultyid = models.BigAutoField(db_column='facultyID', primary_key=True)  # Field name made lowercase.
     title_of_faculty = models.CharField(db_column='Title_of_faculty', max_length=350)  # Field name made lowercase.
+    abbreviated_name_of_faculty = models.CharField(db_column='Abbreviated_name_of_faculty', max_length=10)  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -211,9 +227,9 @@ class Faculty(models.Model):
 
 class Groups(models.Model):
     groupid = models.BigAutoField(primary_key=True)
-    number_of_group = models.CharField(db_column='Number_of_group', max_length=10, blank=True, null=True)  # Field name made lowercase.
-    facultyid = models.ForeignKey(Faculty, models.DO_NOTHING, db_column='facultyID', blank=True, null=True)  # Field name made lowercase.
-    departmentid = models.ForeignKey(Department, models.DO_NOTHING, db_column='departmentID', blank=True, null=True)  # Field name made lowercase.
+    number_of_group = models.CharField(db_column='Number_of_group', max_length=10)  # Field name made lowercase.
+    departmentid = models.ForeignKey(Department, models.DO_NOTHING, db_column='departmentID')  # Field name made lowercase.
+    year_of_entry = models.IntegerField(db_column='Year_of_entry')  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -223,11 +239,10 @@ class Groups(models.Model):
 class Lecturer(models.Model):
     lecturerid = models.BigAutoField(primary_key=True)
     last_name_lecturer = models.CharField(max_length=50, blank=True, null=True)
-    first_name_lecturer = models.CharField(max_length=50, blank=True, null=True)
+    first_name_lecturer = models.CharField(max_length=50)
     patronymic_lecturer = models.CharField(max_length=50, blank=True, null=True)
-    positionid = models.ForeignKey(Positions, models.DO_NOTHING, db_column='PositionID', blank=True, null=True)  # Field name made lowercase.
-    facultyid = models.ForeignKey(Faculty, models.DO_NOTHING, db_column='facultyID', blank=True, null=True)  # Field name made lowercase.
-    departmentid = models.ForeignKey(Department, models.DO_NOTHING, db_column='departmentID', blank=True, null=True)  # Field name made lowercase.
+    positionid = models.ForeignKey(Positions, models.DO_NOTHING, db_column='PositionID')  # Field name made lowercase.
+    departmentid = models.ForeignKey(Department, models.DO_NOTHING, db_column='departmentID')  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -238,9 +253,9 @@ class Students(models.Model):
     studentid = models.BigAutoField(primary_key=True)
     groupid = models.ForeignKey(Groups, models.DO_NOTHING, db_column='groupid')
     last_name_student = models.CharField(max_length=50, blank=True, null=True)
-    first_name_student = models.CharField(max_length=50, blank=True, null=True)
+    first_name_student = models.CharField(max_length=50)
     patronymic_student = models.CharField(max_length=50, blank=True, null=True)
-    number_of_record_book = models.CharField(max_length=10, blank=True, null=True)
+    number_of_record_book = models.CharField(max_length=10)
 
     class Meta:
         managed = False
