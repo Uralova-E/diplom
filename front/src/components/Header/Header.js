@@ -7,7 +7,9 @@ const Header = () => {
 
     return (
         <div className='header'>
-            <div className='header-logo-container'>
+            <div 
+            className='header-logo-container'
+            onClick={() => window.location.assign('/')}>
                 <div className='header-logo-icon' />
                 <div style={{lineHeight: '10px'}}>[электронный университет]</div>
             </div>
