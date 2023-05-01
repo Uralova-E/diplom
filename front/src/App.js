@@ -5,20 +5,28 @@ import {
   createBrowserRouter,
   RouterProvider
 } from 'react-router-dom'
+import ConsultationLecturer from './pages/ConsultationLecturer/ConsultationLecturer';
 
 function App() {
   const router = createBrowserRouter([
     {
-      path: '/',
-      element: <MainPage />
+      path: "/",
+      element: <>
+        <Header />
+        <MainPage />
+      </>
     },
+    {
+      path: "/consultations-lecturer",
+      element: <>
+        <Header />
+        <ConsultationLecturer />
+      </>
+    }
   ])
 
   return (
-  <>
-    <Header />
     <RouterProvider router={router} />
-  </>
   );
 }
 

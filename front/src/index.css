@@ -16,8 +16,22 @@ code {
     padding-top: 21px;
 } 
 
+.title {
+  font-weight: 500;
+  font-size: 19.6px;
+}
+
 a {
   color: #446e9b;
   background-color: transparent;
   text-decoration: none
+}
+
+.button {
+  background: #FFFFFF;
+  border: 2px solid #446E9B;
+  border-radius: 20px;
+  cursor: pointer;
+  display: inline-block;
+  padding: 8px 20px;
 }

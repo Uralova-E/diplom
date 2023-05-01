@@ -5,7 +5,7 @@ const MainPage = () => {
 
     return (
     <div className='container'>
-        <div className='main-page-title'>
+        <div className='title'>
             Запись на консультации
         </div>
         <p className='main-page-text'>
@@ -13,7 +13,7 @@ const MainPage = () => {
             студентов на консультации к преподавателям. Доступ к подсистеме осуществляется 
             с помощью логина и пароля единой учетной записи обучающегося 
             (логин и пароль почты и Wi-Fi). Пользователи, не имеющие такой учетной записи, 
-            могут оформить ее <a style={{fontWeight: '700'}} href={linkToWiki}> по инструкции</a>.
+            могут оформить ее <a target={'_blank'} style={{fontWeight: '700'}} href={linkToWiki}> по инструкции</a>.
             С вопросами и предложениями по работе личного кабинета можно 
             обращаться по адресу <a href='mailto:eu@bmstu.ru'> eu@bmstu.ru </a>
         </p>

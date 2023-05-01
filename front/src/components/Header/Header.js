@@ -1,15 +1,17 @@
 import './Header.scss'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const Header = () => {
     const [dropdownIsVisible, setDropdownIsVisible] = useState(false)
     document.onclick = () => {setDropdownIsVisible(false)}
+    const navigate = useNavigate()
 
     return (
         <div className='header'>
             <div 
             className='header-logo-container'
-            onClick={() => window.location.assign('/')}>
+            onClick={() => navigate('/')}>
                 <div className='header-logo-icon' />
                 <div style={{lineHeight: '10px'}}>[электронный университет]</div>
             </div>
@@ -35,10 +37,21 @@ const Header = () => {
             {
                 dropdownIsVisible &&
                 <div className='header-menu-dropdown'>
-                    <a href='https://lks.bmstu.ru/' target={'_blank'} className='header-menu-dropdown-item'>
+                    <a 
+                    href='https://lks.bmstu.ru/' 
+                    target={'_blank'} 
+                    className='header-menu-dropdown-item'>
                         Кабинет обучающегося
                     </a>
-                    <a href='https://student.bmstu.ru/' target={'_blank'} className='header-menu-dropdown-item'>
+                    <a 
+                    onClick={() => navigate('/consultations-lecturer')}
+                    className='header-menu-dropdown-item'>
+                        Консультации
+                    </a>
+                    <a 
+                    href='https://student.bmstu.ru/' 
+                    target={'_blank'} 
+                    className='header-menu-dropdown-item'>
                         Студенческая почта 
                     </a>
                 </div>
