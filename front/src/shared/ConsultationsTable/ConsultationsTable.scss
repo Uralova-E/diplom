@@ -1,0 +1,12 @@
+.consultations-table {
+    margin: 25px 0;
+
+    &-row {
+        display: grid;
+        grid-template-columns: 3fr repeat(6, 2fr);
+    }
+
+    &-cell {
+        text-align: center;
+    }
+}

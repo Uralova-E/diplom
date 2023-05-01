@@ -1,3 +1,4 @@
+import ConsultationsTable from '../../shared/ConsultationsTable/ConsultationsTable'
 import './ConsultationLecturer.scss'
 
 const ConsultationLecturer = () => {
@@ -5,6 +6,7 @@ const ConsultationLecturer = () => {
         <div className='title'>
             Список запланированных консультаций
         </div>
+        <ConsultationsTable />
         <div  
             className='button'
             onClick={async (...args) => {  
