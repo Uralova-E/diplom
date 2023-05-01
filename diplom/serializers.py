@@ -124,9 +124,9 @@ class DisciplinePostPutDeleteSerializer(ModelSerializer):
 
 class ConsultationSerializer(ModelSerializer):
     auditoriumid = SlugRelatedField(slug_field='number_of_auditorium', read_only=True)
-    lecturerid = SlugRelatedField(slug_field='last_name_lecturer', read_only=True)
     groupid = SlugRelatedField(slug_field='number_of_group', read_only=True)
     disciplineid = SlugRelatedField(slug_field='name_of_discipline', read_only=True)
+
 
     class Meta:
         model = Consultation
