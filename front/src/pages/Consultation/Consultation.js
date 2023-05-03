@@ -1,11 +1,11 @@
 import ConsultationsTable from '../../shared/ConsultationsTable/ConsultationsTable'
-import './ConsultationLecturer.scss'
+import './Consultation.scss'
 import axios from 'axios';
 import { baseURL } from '../../variables'
 import { useEffect, useState } from 'react';
 import { user } from '../../user';
 
-const ConsultationLecturer = () => {
+const Consultation = () => {
     const [consultationsNext, setConsultationsNext] = useState([])
     const [consultationsPrev, setConsultationsPrev] = useState([])
 
@@ -29,7 +29,7 @@ const ConsultationLecturer = () => {
         </div>
         {
             consultationsNext.length === 0?
-            <div className='consultation-lecturer-text'>
+            <div className='consultation-text'>
                 Запланированных консультаций пока нет. Чтобы добавить новую консультацию, нажмите на кнопку "Добавить". 
             </div>:
             <ConsultationsTable consultations={consultationsNext} />
@@ -56,4 +56,4 @@ const ConsultationLecturer = () => {
     </div>
 }
 
-export default ConsultationLecturer
+export default Consultation

@@ -44,7 +44,7 @@ const Header = () => {
                         Кабинет обучающегося
                     </a>
                     <a 
-                    onClick={() => navigate('/consultations-lecturer')}
+                    onClick={() => navigate('/consultations')}
                     className='header-menu-dropdown-item'>
                         Консультации
                     </a>

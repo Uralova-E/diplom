@@ -5,7 +5,7 @@ import {
   createBrowserRouter,
   RouterProvider
 } from 'react-router-dom'
-import ConsultationLecturer from './pages/ConsultationLecturer/ConsultationLecturer';
+import Consultation from './pages/Consultation/Consultation';
 
 function App() {
   const router = createBrowserRouter([
@@ -17,10 +17,10 @@ function App() {
       </>
     },
     {
-      path: "/consultations-lecturer",
+      path: "/consultations",
       element: <>
         <Header />
-        <ConsultationLecturer />
+        <Consultation />
       </>
     }
   ])
