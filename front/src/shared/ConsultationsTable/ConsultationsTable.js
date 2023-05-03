@@ -1,3 +1,4 @@
+import { dateNormilize } from '../../utiles/dateNormilize'
 import { timeNormilize } from '../../utiles/timeNormilize'
 import './ConsultationsTable.scss'
 
@@ -18,7 +19,7 @@ const ConsultationsTable = ({ consultations }) => {
                 <div className='consultations-table-row'>
                     <div className='consultations-table-cell'>{consultation.disciplineid}</div>
                     <div className='consultations-table-cell'>{consultation.topic}</div>
-                    <div className='consultations-table-cell'>{consultation.date}</div>
+                    <div className='consultations-table-cell'>{dateNormilize(consultation.date)}</div>
                     <div className='consultations-table-cell'>{timeNormilize(consultation.start_time)}</div>
                     <div className='consultations-table-cell'>{timeNormilize(consultation.end_time)}</div>
                     <div className='consultations-table-cell'>{consultation.groupid}</div>
