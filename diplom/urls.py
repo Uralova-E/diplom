@@ -51,6 +51,7 @@ urlpatterns = [
      path('discipline/<int:pk>', DisciplineRetrieveView.as_view()),
      path('discipline/', DisciplinePostPutDeleteView.as_view()),
      path('consultation/list/', ConsultationListView.as_view()),
+     path('consultation/lecturer/list/<int:lecturerID>', ConsultationLecturerListView.as_view()),
      path('consultation/<int:pk>', ConsultationRetrieveView.as_view()),
      path('consultation/', ConsultationPostPutDeleteView.as_view()),
      path('studentrecord/list/', StudentrecordListView.as_view()),

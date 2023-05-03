@@ -3,6 +3,7 @@ import './ConsultationLecturer.scss'
 import axios from 'axios';
 import { baseURL } from '../../variables'
 import { useEffect, useState } from 'react';
+import { user } from '../../user';
 
 const ConsultationLecturer = () => {
     const [consultationsNext, setConsultationsNext] = useState([])
@@ -11,7 +12,7 @@ const ConsultationLecturer = () => {
     const [consultationsPrevIsVisible, setConsultationsPrevIsVisible] = useState(false)
 
     useEffect(() => {
-        axios.get(`${baseURL}consultation/list/`).then(
+        axios.get(`${baseURL}consultation/lecturer/list/${user.userID}`).then(
             response => {
                 response.data.map((item) => {
                     if( new Date(item.date).getMilliseconds > new Date().getMilliseconds) {
