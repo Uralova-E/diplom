@@ -4,8 +4,11 @@ import axios from 'axios';
 import { baseURL } from '../../variables'
 import { useEffect, useState } from 'react';
 import { user } from '../../user';
+import { useNavigate } from 'react-router-dom';
 
 const Consultation = () => {
+    const navigate = useNavigate()
+
     const [consultationsNext, setConsultationsNext] = useState([])
     const [consultationsPrev, setConsultationsPrev] = useState([])
 
@@ -37,7 +40,7 @@ const Consultation = () => {
 
         <div  
         className='button'
-        onClick={() => {}}> 
+        onClick={() => {navigate('/add-consultation')}}> 
         Добавить 
         </div>
 

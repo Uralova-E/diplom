@@ -6,6 +6,7 @@ import {
   RouterProvider
 } from 'react-router-dom'
 import Consultation from './pages/Consultation/Consultation';
+import AddConsultation from './pages/AddConsultation/AddConsultation';
 
 function App() {
   const router = createBrowserRouter([
@@ -21,6 +22,13 @@ function App() {
       element: <>
         <Header />
         <Consultation />
+      </>
+    },
+    {
+      path: "/add-consultation",
+      element: <>
+        <Header />
+        <AddConsultation />
       </>
     }
   ])
