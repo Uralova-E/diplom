@@ -21,7 +21,8 @@ from diplom_bmstu.views import *
 
 urlpatterns = [
      path('admin/', admin.site.urls),
-     path('lecturer/list/', LecturerListView.as_view()),
+     path('lecturers/list/', LecturerListView.as_view()),
+     path('lecturers/list/<int:departmentID>', LecturerListDepartmentView.as_view()),
      path('lecturer/<int:pk>', LecturerRetrieveView.as_view()),
      path('lecturer/', LecturerPostPutDeleteView.as_view()),
      path('auditorium/list/', AuditoriumListView.as_view()),
@@ -32,6 +33,7 @@ urlpatterns = [
      path('faculty/', FacultyPostPutDeleteView.as_view()),
      path('positions/<int:pk>', PositionsRetrieveView.as_view()),
      path('positions/', PositionsPostPutDeleteView.as_view()),
+     path('departments/list/<int:facultyID>', DepartmentsListFacultyView.as_view()),
      path('department/<int:pk>', DepartmentRetrieveView.as_view()),
      path('department/', DepartmentPostPutDeleteView.as_view()),
      path('groups/list/', GroupsListView.as_view()),

@@ -1,5 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 from rest_framework.relations import SlugRelatedField
+from rest_framework import serializers
 
 from diplom_bmstu.models import *
 
@@ -12,6 +13,15 @@ class LecturerSerializer(ModelSerializer):
     class Meta:
         model = Lecturer
         fields = '__all__'
+
+
+# class LecturerSerializer(serializers.Serializer):
+#     lecturerid = serializers.IntegerField()
+#     last_name_lecturer = serializers.CharField()
+#     first_name_lecturer = serializers.CharField()
+#     patronymic_lecturer = serializers.CharField()
+#     department = serializers.CharField()
+#     faculty = serializers.CharField()
 
 
 class LecturerPostPutDeleteSerializer(ModelSerializer):

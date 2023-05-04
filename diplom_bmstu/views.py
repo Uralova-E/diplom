@@ -14,6 +14,15 @@ class LecturerListView(generics.ListAPIView):
     def get_queryset(self):
         return Lecturer.objects.all()
 
+class LecturerListDepartmentView(generics.ListAPIView):
+    serializer_class = LecturerSerializer
+
+    # permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        departmentID = self.kwargs['departmentID']
+        return Lecturer.objects.all().filter(departmentid=departmentID)
+
 
 class LecturerRetrieveView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = LecturerPostPutDeleteSerializer
@@ -153,6 +162,15 @@ class PositionsPostPutDeleteView(APIView):
             position.save()
             return Response(status=200)
         return Response(position.errors, status=400)
+
+
+class DepartmentsListFacultyView(generics.ListAPIView):
+    serializer_class = DepartmentPostPutDeleteSerializer
+
+    # permission_classes = [permissions.IsAuthenticated]
+    def get_queryset(self):
+        facultyID = self.kwargs['facultyID']
+        return Department.objects.all().filter(facultyid=facultyID)
 
 
 class DepartmentRetrieveView(generics.RetrieveUpdateDestroyAPIView):

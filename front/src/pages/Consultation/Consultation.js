@@ -41,7 +41,9 @@ const Consultation = () => {
         {
             consultationsNext.length === 0?
             <div className='consultation-text'>
-                Запланированных консультаций пока нет. Чтобы добавить новую консультацию, нажмите на кнопку "Добавить". 
+                Запланированных консультаций пока нет. 
+                { user.lecturerID !== null && 
+                'Чтобы добавить новую консультацию, нажмите на кнопку "Добавить".' }
             </div>:
             <ConsultationsTable consultations={consultationsNext} />
         }

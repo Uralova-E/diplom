@@ -1,5 +1,5 @@
-import { dateNormilize } from '../../utiles/dateNormilize'
-import { timeNormilize } from '../../utiles/timeNormilize'
+import { dateNormilize } from '../../utils/dateNormilize'
+import { timeNormilize } from '../../utils/timeNormilize'
 import './ConsultationsTable.scss'
 
 const ConsultationsTable = ({ consultations }) => {
