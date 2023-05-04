@@ -17,8 +17,15 @@ const Consultation = () => {
     useEffect(() => {
         axios.get(`${baseURL}consultation/lecturer/list/${user.userID}`).then(
             response => {
+                console.log(response.data)
                 response.data.map((item) => {
-                    if( new Date(item.date).getMilliseconds > new Date().getMilliseconds) {
+                    const day = item.date.split('-')[2]
+                    const month = item.date.split('-')[1]-1
+                    const year = item.date.split('-')[0]
+                    const hours = item.start_time.split(':')[0]
+                    const min = item.start_time.split(':')[1]
+                    console.log(new Date(year, month, day, hours, min))
+                    if( new Date(year, month, day, hours, min).getTime() > new Date().getTime()) {
                         setConsultationsNext(consultationsNext => [...consultationsNext, item])
                     } else {
                         setConsultationsPrev(consultationsPrev => [...consultationsPrev, item])
@@ -53,7 +60,13 @@ const Consultation = () => {
         </div>
 
         {
-            consultationsPrevIsVisible && <ConsultationsTable consultations={consultationsPrev} />
+            consultationsPrevIsVisible && (
+                consultationsPrev.length === 0?
+                <div className='consultation-text'>
+                    Прошедших консультаций пока нет
+                </div>:
+                <ConsultationsTable consultations={consultationsPrev} />
+            )
         }
 
     </div>
