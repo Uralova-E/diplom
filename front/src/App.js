@@ -18,7 +18,7 @@ function App() {
       </>
     },
     {
-      path: "/consultations",
+      path: "/consultations/:lecturerID",
       element: <>
         <Header />
         <Consultation />
@@ -26,6 +26,13 @@ function App() {
     },
     {
       path: "/add-consultation",
+      element: <>
+        <Header />
+        <AddConsultation />
+      </>
+    },
+    {
+      path: "/lecturers-list",
       element: <>
         <Header />
         <AddConsultation />

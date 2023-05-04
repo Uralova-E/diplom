@@ -1,6 +1,7 @@
 import './Header.scss'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { user } from '../../user'
 
 const Header = () => {
     const [dropdownIsVisible, setDropdownIsVisible] = useState(false)
@@ -44,7 +45,10 @@ const Header = () => {
                         Кабинет обучающегося
                     </a>
                     <a 
-                    onClick={() => navigate('/consultations')}
+                    onClick={() => {
+                        if (user.lecturerID !== null) navigate(`/consultations/${user.lecturerID}`)
+                        else navigate('/lecturers-list')
+                    }} 
                     className='header-menu-dropdown-item'>
                         Консультации
                     </a>

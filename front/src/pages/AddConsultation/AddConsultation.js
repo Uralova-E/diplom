@@ -33,6 +33,10 @@ const AddConsultation = () => {
     const [auditoriumError, setAuditoriumError] = useState(false)
 
     useEffect(() => {
+        if (user.lecturerID === null) {
+            navigate('/consultations')
+        }
+
         getOptions(
             'discipline/list/', 
             setDisciplineOptions, 

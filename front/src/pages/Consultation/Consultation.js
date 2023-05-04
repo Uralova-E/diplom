@@ -4,9 +4,10 @@ import axios from 'axios';
 import { baseURL } from '../../variables'
 import { useEffect, useState } from 'react';
 import { user } from '../../user';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const Consultation = () => {
+    const { lecturerID } = useParams();
     const navigate = useNavigate()
 
     const [consultationsNext, setConsultationsNext] = useState([])
@@ -15,7 +16,7 @@ const Consultation = () => {
     const [consultationsPrevIsVisible, setConsultationsPrevIsVisible] = useState(false)
 
     useEffect(() => {
-        axios.get(`${baseURL}consultation/lecturer/list/${user.userID}`).then(
+        axios.get(`${baseURL}consultation/lecturer/list/${lecturerID}`).then(
             response => {
                 console.log(response.data)
                 response.data.map((item) => {
@@ -45,11 +46,14 @@ const Consultation = () => {
             <ConsultationsTable consultations={consultationsNext} />
         }
 
-        <div  
-        className='button'
-        onClick={() => {navigate('/add-consultation')}}> 
-        Добавить 
-        </div>
+        {
+            user.lecturerID !== null &&
+            <div  
+            className='button'
+            onClick={() => {navigate('/add-consultation')}}> 
+            Добавить 
+            </div>
+        }
 
         <div  
         className='button'
