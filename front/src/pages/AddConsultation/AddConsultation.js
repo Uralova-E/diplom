@@ -1,6 +1,112 @@
+import { useEffect, useState } from 'react'
 import './AddConsultation.scss'
+import { Dropdown, Input } from 'semantic-ui-react'
+import { getOptions } from '../../utiles/getOptions'
+import { sortByField } from '../../utiles/sortByField'
+import { user } from '../../user'
+import { timeValidate } from '../../utiles/timeValidate'
+import axios from 'axios'
+import { baseURL } from '../../variables'
+import { useNavigate } from 'react-router-dom'
 
 const AddConsultation = () => {
+    const navigate = useNavigate()
+
+    const [disciplineOptions, setDisciplineOptions] = useState([])
+    const [groupOptions, setGroupOptions] = useState([])
+    const [auditoriumOptions, setAuditoriumOptions] = useState([])
+
+    const [selectedDiscipline, setSelectedDiscipline] = useState()
+    const [selectedTheme, setSelectedTheme] = useState()
+    const [selectedDate, setSelectedDate] = useState()
+    const [selectedStartTime, setSelectedStartTime] = useState()
+    const [selectedEndTime, setSelectedEndTime] = useState()
+    const [selectedGroup, setSelectedGroup] = useState()
+    const [selectedAuditorium, setSelectedAuditorium] = useState()
+
+    const [disciplineError, setDisciplineError] = useState(false)
+    const [themeError, setThemeError] = useState(false)
+    const [dateError, setDateError] = useState(false)
+    const [startTimeError, setStartTimeError] = useState(false)
+    const [endTimeError, setEndTimeError] = useState(false)
+    const [groupError, setGroupError] = useState(false)
+    const [auditoriumError, setAuditoriumError] = useState(false)
+
+    useEffect(() => {
+        getOptions(
+            'discipline/list/', 
+            setDisciplineOptions, 
+            'disciplineid',
+            'name_of_discipline',
+            'name_of_discipline')
+
+        getOptions(
+            'groups/list/', 
+            setGroupOptions, 
+            'groupid',
+            'number_of_group',
+            'number_of_group')
+            
+        getOptions(
+            'auditorium/list/', 
+            setAuditoriumOptions, 
+            'auditoriumid',
+            'number_of_auditorium',
+            'number_of_auditorium')
+    }, [])
+
+    const handleClickSave = () => {
+        let error = false
+
+        if (typeof selectedDiscipline === 'undefined') {
+            error = true
+            setDisciplineError(true)
+        }
+        if (typeof selectedTheme === 'undefined' || selectedTheme === '') {
+            error = true
+            setThemeError(true)
+        }
+        if (typeof selectedDate === 'undefined') {
+            error = true
+            setDateError(true)
+        }
+        if (!timeValidate(selectedStartTime)) {
+            setStartTimeError(true)
+            error = true
+        } 
+        if (!timeValidate(selectedEndTime)) {
+            setEndTimeError(true)
+            error = true
+        }
+        if (typeof selectedGroup === 'undefined') {
+            error = true
+            setGroupError(true)
+        }
+        if (typeof selectedAuditorium === 'undefined') {
+            error = true
+            setAuditoriumError(true)
+        }
+
+        if (!error) {
+            const requestData = {
+                auditoriumid: selectedAuditorium,
+                lecturerid: user.userID,
+                topic: selectedTheme,
+                date: selectedDate,
+                start_time: selectedStartTime + ':00+03:00',
+                end_time: selectedEndTime + ':00+03:00',
+                groupid: selectedGroup,
+                was_conducted: null,
+                notes: '',
+                disciplineid: selectedDiscipline
+            }  
+            
+            axios.post(`${baseURL}consultation/`, requestData)
+            .then(() => navigate('/consultations'))
+            .catch(err => console.log(err))
+        }
+    }
+
     return (
         <div className='container'>
             <div 
@@ -13,44 +119,78 @@ const AddConsultation = () => {
             </div>
 
             <div className='add-consultation-input-container'>
-                <input 
-                type='text'
-                placeholder='Дисциплина'
-                className='add-consultation-input' />
-                
-                <input 
-                type='text'
-                placeholder='Тема'
-                className='add-consultation-input' />
-                
-                <input 
-                type='text'
-                placeholder='Дата'
-                className='add-consultation-input' />
-                                
-                <input 
-                type='text'
-                placeholder='Время начала'
-                className='add-consultation-input' />
-                                
-                <input 
-                type='text'
-                placeholder='Время окончания'
-                className='add-consultation-input' />
-                                
-                <input 
-                type='text'
-                placeholder='Группа'
-                className='add-consultation-input' />
-                                
-                <input 
-                type='text'
-                placeholder='Аудитория'
-                className='add-consultation-input' />
+                <Dropdown
+                    placeholder='Дисциплина'
+                    className='add-consultation-input'
+                    onChange={(e, value) => setSelectedDiscipline(disciplineOptions.findIndex(el => el.text == value.value))}
+                    fluid
+                    error={disciplineError}
+                    onFocus={() => setDisciplineError(false)}
+                    search
+                    selection
+                    options={disciplineOptions.sort(sortByField('text'))}
+                />
+                <Input
+                    placeholder='Тема'
+                    onChange={(e) => setSelectedTheme(e.target.value)}
+                    error={themeError}
+                    onFocus={() => setThemeError(false)}
+                    className='add-consultation-input'
+                    fluid
+                />
+                <Input
+                    placeholder='Дата'
+                    onChange={(e) => setSelectedDate(e.target.value)}
+                    error={dateError}
+                    onFocus={() => setDateError(false)}
+                    type='date'
+                    className='add-consultation-input'
+                    fluid
+                />
+                <Input
+                    placeholder='Время начала'
+                    onChange={(e) => setSelectedStartTime(e.target.value)}
+                    error={startTimeError}
+                    onFocus={() => setStartTimeError(false)}
+                    className='add-consultation-input'
+                    fluid
+                />
+                <Input
+                    placeholder='Время окончания'
+                    onChange={(e) => setSelectedEndTime(e.target.value)}
+                    error={endTimeError}
+                    onFocus={() => setEndTimeError(false)}
+                    className='add-consultation-input'
+                    fluid
+                />
+                <Dropdown
+                    placeholder='Группа'
+                    className='add-consultation-input'
+                    onChange={(e, value) => setSelectedGroup(groupOptions.findIndex(el => el.text == value.value))}
+                    fluid
+                    search
+                    selection
+                    error={groupError}
+                    onFocus={() => setGroupError(false)}
+                    options={groupOptions.sort(sortByField('text'))}
+                />
+                <Dropdown
+                    placeholder='Аудитория'
+                    className='add-consultation-input'
+                    onChange={(e, value) => setSelectedAuditorium(auditoriumOptions.findIndex(el => el.text == value.value))}
+                    fluid
+                    search
+                    selection
+                    error={auditoriumError}
+                    onFocus={() => setAuditoriumError(false)}
+                    options={auditoriumOptions.sort(sortByField('text'))}
+                />
             </div>
 
             <div className='add-consultation-button-container'>
-                <div className='button'>
+                <div 
+                onClick={handleClickSave}
+                className='button'>
                     Сохранить
                 </div>
             </div>
