@@ -34,7 +34,7 @@ const AddConsultation = () => {
 
     useEffect(() => {
         if (user.lecturerID === null) {
-            navigate('/consultations')
+            navigate('/lecturers-list')
         }
 
         getOptions(

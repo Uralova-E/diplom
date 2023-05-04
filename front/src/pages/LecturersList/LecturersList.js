@@ -8,4 +8,4 @@ const LecturersList = () => {
     )
 }
 
-return LecturersList;
+export default LecturersList;

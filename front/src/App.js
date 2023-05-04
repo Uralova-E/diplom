@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom'
 import Consultation from './pages/Consultation/Consultation';
 import AddConsultation from './pages/AddConsultation/AddConsultation';
+import LecturerList from './pages/LecturersList/LecturersList';
 
 function App() {
   const router = createBrowserRouter([
@@ -35,7 +36,7 @@ function App() {
       path: "/lecturers-list",
       element: <>
         <Header />
-        <AddConsultation />
+        <LecturerList />
       </>
     }
   ])
