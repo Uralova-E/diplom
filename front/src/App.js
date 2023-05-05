@@ -5,7 +5,7 @@ import {
   createBrowserRouter,
   RouterProvider
 } from 'react-router-dom'
-import Consultation from './pages/Consultation/Consultation';
+import ConsultationList from './pages/ConsultationList/ConsultationList';
 import AddConsultation from './pages/AddConsultation/AddConsultation';
 import LecturerList from './pages/LecturersList/LecturersList';
 
@@ -22,7 +22,7 @@ function App() {
       path: "/consultations/:lecturerID",
       element: <>
         <Header />
-        <Consultation />
+        <ConsultationList />
       </>
     },
     {

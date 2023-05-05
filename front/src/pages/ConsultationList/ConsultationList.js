@@ -1,12 +1,12 @@
 import ConsultationsTable from '../../shared/ConsultationsTable/ConsultationsTable'
-import './Consultation.scss'
+import './ConsultationList.scss'
 import axios from 'axios';
 import { baseURL } from '../../variables'
 import { useEffect, useState } from 'react';
 import { user } from '../../user';
 import { useNavigate, useParams } from 'react-router-dom';
 
-const Consultation = () => {
+const ConsultationList = () => {
     const { lecturerID } = useParams();
     const navigate = useNavigate()
 
@@ -78,4 +78,4 @@ const Consultation = () => {
     </div>
 }
 
-export default Consultation
+export default ConsultationList
