@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import './AddConsultation.scss'
-import { Dropdown, Input } from 'semantic-ui-react'
+import { Dropdown, Input, TextArea } from 'semantic-ui-react'
 import { getOptions } from '../../utils/getOptions'
 import { sortByField } from '../../utils/sortByField'
 import { user } from '../../user'
@@ -23,6 +23,7 @@ const AddConsultation = () => {
     const [selectedEndTime, setSelectedEndTime] = useState()
     const [selectedGroup, setSelectedGroup] = useState()
     const [selectedAuditorium, setSelectedAuditorium] = useState()
+    const [notes, setNotes] = useState('')
 
     const [disciplineError, setDisciplineError] = useState(false)
     const [themeError, setThemeError] = useState(false)
@@ -101,7 +102,7 @@ const AddConsultation = () => {
                 end_time: selectedEndTime + ':00+03:00',
                 groupid: selectedGroup,
                 was_conducted: null,
-                notes: '',
+                notes: notes,
                 disciplineid: selectedDiscipline
             }  
             
@@ -188,6 +189,12 @@ const AddConsultation = () => {
                     error={auditoriumError}
                     onFocus={() => setAuditoriumError(false)}
                     options={auditoriumOptions.sort(sortByField('text'))}
+                />
+                <TextArea 
+                placeholder='Заметки'
+                className='add-consultation-input'
+                style={{padding: '10px'}}
+                onChange={(e) => setNotes(e.target.value)}
                 />
             </div>
 

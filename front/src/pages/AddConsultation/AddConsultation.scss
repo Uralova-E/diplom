@@ -1,3 +1,11 @@
+textarea {
+    outline: none;
+
+    &::placeholder {
+        color: rgba(191,191,191,.87);
+    }
+}
+
 .add-consultation {
     &-input {
         width: 450px !important;
