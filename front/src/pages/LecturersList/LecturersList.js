@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Dropdown } from 'semantic-ui-react';
-import Faculty from '../../components/Faculty/Faculty';
+import Faculty from '../../shared/Faculty/Faculty';
 import { sortByField } from '../../utils/sortByField';
 import { baseURL } from '../../variables';
 import './LecturersList.scss'
