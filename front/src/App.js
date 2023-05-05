@@ -8,6 +8,7 @@ import {
 import ConsultationList from './pages/ConsultationList/ConsultationList';
 import AddConsultation from './pages/AddConsultation/AddConsultation';
 import LecturerList from './pages/LecturersList/LecturersList';
+import Consultation from './pages/Consultation/Consultation';
 
 function App() {
   const router = createBrowserRouter([
@@ -23,6 +24,13 @@ function App() {
       element: <>
         <Header />
         <ConsultationList />
+      </>
+    },
+    {
+      path: "/consultation/:consultationID",
+      element: <>
+        <Header />
+        <Consultation />
       </>
     },
     {
