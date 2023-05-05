@@ -18,14 +18,12 @@ const ConsultationList = () => {
     useEffect(() => {
         axios.get(`${baseURL}consultation/lecturer/list/${lecturerID}`).then(
             response => {
-                console.log(response.data)
                 response.data.map((item) => {
                     const day = item.date.split('-')[2]
                     const month = item.date.split('-')[1]-1
                     const year = item.date.split('-')[0]
                     const hours = item.start_time.split(':')[0]
                     const min = item.start_time.split(':')[1]
-                    console.log(new Date(year, month, day, hours, min))
                     if( new Date(year, month, day, hours, min).getTime() > new Date().getTime()) {
                         setConsultationsNext(consultationsNext => [...consultationsNext, item])
                     } else {

@@ -27,7 +27,7 @@ const LecturersList = () => {
                 })
             })
     }, [])
-
+    
     return (
         <div className='container'>
             <div className='title'>
@@ -36,7 +36,10 @@ const LecturersList = () => {
             <Dropdown
                 placeholder='Поиск преподавателя'
                 style={{margin: '15px 0'}}
-                onChange={(e, value) => navigate(`/consultations/${lecturersOption.findIndex(el => el.text === value.value)}`)}
+                onChange={(e, value) => {
+                    if(e._reactName === 'onClick')
+                    navigate(`/consultations/${lecturersOption[lecturersOption.findIndex(el => el.text === value.value)].key}`)
+                }}
                 fluid
                 search
                 selection
