@@ -8,13 +8,14 @@ import { timeValidate } from '../../utils/timeValidate'
 import axios from 'axios'
 import { baseURL } from '../../variables'
 import { useNavigate } from 'react-router-dom'
+import { GetAuditoriumOptions, GetDisciplineOptions, GetGroupOptions } from '../../utils/options'
 
 const AddConsultation = () => {
     const navigate = useNavigate()
 
-    const [disciplineOptions, setDisciplineOptions] = useState([])
-    const [groupOptions, setGroupOptions] = useState([])
-    const [auditoriumOptions, setAuditoriumOptions] = useState([])
+    const disciplineOptions = GetDisciplineOptions()
+    const groupOptions = GetGroupOptions()
+    const auditoriumOptions = GetAuditoriumOptions()
 
     const [selectedDiscipline, setSelectedDiscipline] = useState()
     const [selectedTheme, setSelectedTheme] = useState()
@@ -37,27 +38,6 @@ const AddConsultation = () => {
         if (user.lecturerID === null) {
             navigate('/lecturers-list')
         }
-
-        getOptions(
-            'discipline/list/', 
-            setDisciplineOptions, 
-            'disciplineid',
-            'name_of_discipline',
-            'name_of_discipline')
-
-        getOptions(
-            'groups/list/', 
-            setGroupOptions, 
-            'groupid',
-            'number_of_group',
-            'number_of_group')
-            
-        getOptions(
-            'auditorium/list/', 
-            setAuditoriumOptions, 
-            'auditoriumid',
-            'number_of_auditorium',
-            'number_of_auditorium')
     }, [])
 
     const handleClickSave = () => {
