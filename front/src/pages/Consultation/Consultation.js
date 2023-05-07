@@ -41,6 +41,7 @@ export const Consultation = () => {
     const [endTimeError, setEndTimeError] = useState(false)
 
     const [studentList, setStudentList] = useState([])
+    const [studentInList, setStudentInList] = useState(false)
 
     const handleClickUpdateConsultation = () => {
         if (updateMode === true) {
@@ -138,6 +139,21 @@ export const Consultation = () => {
 
         setStudentList(list)        
     }
+
+    const handleClickEnroll = () => {
+        const requestDataRecord = {
+            consultationid: consultationID,
+            studentid: user.studentID,
+            visiting: null,
+            notes_of_lecturer: ''
+        }
+
+        axios.post(`${baseURL}studentrecord/`, requestDataRecord)
+        .then(() => {
+            setStudentInList(true)
+            axios.get(`${baseURL}studentrecord/list/consultations/${consultationID}`)
+            .then(response => setStudentList(response.data))
+    })}
     
     useEffect(() => {
         axios.get(`${baseURL}consultation/${consultationID}`).then(
@@ -163,7 +179,12 @@ export const Consultation = () => {
                 .then((response) => setAuditorium(response.data.number_of_auditorium))
             })
         axios.get(`${baseURL}studentrecord/list/consultations/${consultationID}`)
-        .then(response => setStudentList(response.data))
+        .then(response => {
+            setStudentList(response.data)
+            response.data.map((record) => {
+                if(record.studentid === user.studentID) setStudentInList(true)
+            })
+        })
     }, [])
 
     useEffect(() => {
@@ -334,12 +355,19 @@ export const Consultation = () => {
             </div>
             
             {
-                user.lecturerID === lecturerID &&
+                user.lecturerID === lecturerID ?
                 <div 
                 style={{marginTop: '15px', marginBottom: '25px'}}
                 onClick={handleClickUpdateConsultation}
                 className='button'>
                     { updateMode? 'Сохранить': 'Редактировать'}
+                </div>:
+                studentInList? <div style={{marginTop: '25px'}}>Вы записаны на эту консультацию</div>:
+                <div 
+                style={{marginTop: '15px'}}
+                onClick={handleClickEnroll}
+                className='button'>
+                    Записаться
                 </div>
             }
         </div>
