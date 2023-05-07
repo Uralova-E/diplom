@@ -143,6 +143,13 @@ class ConsultationSerializer(ModelSerializer):
         fields = '__all__'
 
 
+class ConsultationStudentSerializer(serializers.Serializer):
+    student = serializers.CharField()
+    group = serializers.CharField()
+    visiting = serializers.BooleanField()
+    notes = serializers.CharField()
+
+
 class ConsultationPostPutDeleteSerializer(ModelSerializer):
     class Meta:
         model = Consultation

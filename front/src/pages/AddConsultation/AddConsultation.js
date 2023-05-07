@@ -75,7 +75,7 @@ const AddConsultation = () => {
         if (!error) {
             const requestData = {
                 auditoriumid: selectedAuditorium,
-                lecturerid: user.userID,
+                lecturerid: user.lecturerID,
                 topic: selectedTheme,
                 date: selectedDate,
                 start_time: selectedStartTime + ':00+03:00',
@@ -107,7 +107,7 @@ const AddConsultation = () => {
                 <Dropdown
                     placeholder='Дисциплина'
                     className='add-consultation-input'
-                    onChange={(e, value) => setSelectedDiscipline(disciplineOptions.findIndex(el => el.text == value.value))}
+                    onChange={(e, value) => setSelectedDiscipline(disciplineOptions[disciplineOptions.findIndex(el => el.text == value.value)].key)}
                     fluid
                     error={disciplineError}
                     onFocus={() => setDisciplineError(false)}
@@ -151,7 +151,7 @@ const AddConsultation = () => {
                 <Dropdown
                     placeholder='Группа'
                     className='add-consultation-input'
-                    onChange={(e, value) => setSelectedGroup(groupOptions.findIndex(el => el.text == value.value))}
+                    onChange={(e, value) => setSelectedGroup(groupOptions[groupOptions.findIndex(el => el.text == value.value)].key)}
                     fluid
                     search
                     selection
@@ -162,7 +162,7 @@ const AddConsultation = () => {
                 <Dropdown
                     placeholder='Аудитория'
                     className='add-consultation-input'
-                    onChange={(e, value) => setSelectedAuditorium(auditoriumOptions.findIndex(el => el.text == value.value))}
+                    onChange={(e, value) => setSelectedAuditorium(auditoriumOptions[auditoriumOptions.findIndex(el => el.text == value.value)].key)}
                     fluid
                     search
                     selection

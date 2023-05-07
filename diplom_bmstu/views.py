@@ -1,4 +1,5 @@
 from django.db.migrations import serializer
+from django.shortcuts import get_object_or_404
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -490,6 +491,34 @@ class StudentrecordListView(generics.ListAPIView):
 
     def get_queryset(self):
         return StudentRecord.objects.all()
+
+
+class StudentrecordListConsultationView(generics.ListAPIView):
+    serializer_class = ConsultationStudentSerializer
+
+    # permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        consultationID = self.kwargs['consultationID']
+        consultations_db = StudentRecord.objects.all().filter(consultationid=consultationID)
+        list_length = len(consultations_db)
+        consultations = list(range(list_length))
+
+        for i in range(list_length):
+
+            student = consultations_db[i].studentid
+            student_group = student.groupid
+            consultations[i] = {
+                'student': f'{student.last_name_student} {student.first_name_student} {student.patronymic_student}',
+                'group': student_group.number_of_group,
+                'visiting': consultations_db[i].visiting,
+                'notes': consultations_db[i].notes_of_lecturer
+            }
+
+        consultations = ConsultationStudentSerializer(data=consultations)
+        if consultations.is_valid():
+            return consultations
+        return consultations.errors
 
 
 class StudentrecordRetrieveView(generics.RetrieveUpdateDestroyAPIView):

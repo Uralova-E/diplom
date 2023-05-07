@@ -57,6 +57,7 @@ urlpatterns = [
      path('consultation/<int:pk>', ConsultationRetrieveView.as_view()),
      path('consultation/', ConsultationPostPutDeleteView.as_view()),
      path('studentrecord/list/', StudentrecordListView.as_view()),
+     path('studentrecord/list/consultations/<int:consultationID>', StudentrecordListConsultationView.as_view()),
      path('studentrecord/<int:pk>',  StudentrecordRetrieveView.as_view()),
      path('studentrecord/',  StudentrecordPostPutDeleteView.as_view()),
 #     # path('auth/', include('djoser.urls')),
