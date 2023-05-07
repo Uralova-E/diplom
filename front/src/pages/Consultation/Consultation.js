@@ -40,6 +40,8 @@ export const Consultation = () => {
     const [startTimeError, setStartTimeError] = useState(false)
     const [endTimeError, setEndTimeError] = useState(false)
 
+    const [studentList, setStudentList] = useState([])
+
     const handleClickUpdateConsultation = () => {
         if (updateMode === true) {
             let error = false
@@ -64,7 +66,7 @@ export const Consultation = () => {
                 if (status === true) statusReq='да'
                 else statusReq = null
 
-                const requestData = {
+                const requestDataConsultation = {
                     auditoriumid: auditoriumID,
                     lecturerid: lecturerID,
                     topic: topic,
@@ -77,12 +79,66 @@ export const Consultation = () => {
                     disciplineid: disciplineID
                 }
                 
-                axios.put(`${baseURL}consultation/${consultationID}`, requestData)
-                .then(() => setUpdateMode(false))
-            }
+                axios.put(`${baseURL}consultation/${consultationID}`, requestDataConsultation)
+                .then(() => {
+                studentList.map(record => {
+                    let visitingReq = null
+                    if (record.visiting) visitingReq='да'
+
+                    const requestDataRecord = {
+                        consultationid: consultationID,
+                        studentid: record.studentid,
+                        visiting: visitingReq,
+                        notes_of_lecturer: record.notes
+                    }
+
+                    axios.put(`${baseURL}studentrecord/${record.recordid}`, requestDataRecord)
+                })
+                setUpdateMode(false)
+            })}
         } else setUpdateMode(true)
     }
-     
+
+    const onClickStudentListVisitingChange = (index) => {
+        const list = new Array(studentList.length)
+
+        studentList.map((item, i) => {
+            let visiting = item.visiting
+            if (i === index) visiting = !visiting
+
+            list[i] = {
+                recordid: item.recordid,
+                studentid: item.studentid, 
+                student: item.student,
+                group: item.group,
+                visiting: visiting,
+                notes: item.notes
+            }
+        })
+
+        setStudentList(list)
+    } 
+
+    const onClickStudentListNotesChange = (index, e) => {
+        const list = new Array(studentList.length)
+
+        studentList.map((item, i) => {
+            let notes = item.notes
+            if (i === index) notes = e.target.value 
+
+            list[i] = {
+                recordid: item.recordid,
+                studentid: item.studentid,
+                student: item.student,
+                group: item.group,
+                visiting: item.visiting,
+                notes: notes
+            }
+        })
+
+        setStudentList(list)        
+    }
+    
     useEffect(() => {
         axios.get(`${baseURL}consultation/${consultationID}`).then(
             response => {
@@ -106,6 +162,8 @@ export const Consultation = () => {
                 axios.get(`${baseURL}auditorium/${response.data.auditoriumid}`)
                 .then((response) => setAuditorium(response.data.number_of_auditorium))
             })
+        axios.get(`${baseURL}studentrecord/list/consultations/${consultationID}`)
+        .then(response => setStudentList(response.data))
     }, [])
 
     useEffect(() => {
@@ -116,7 +174,7 @@ export const Consultation = () => {
         axios.get(`${baseURL}auditorium/${auditoriumID}`)
         .then((response) => setAuditorium(response.data.number_of_auditorium))
     }, [updateMode])
-
+    
     return (
         <div style={{fontSize: '16px'}} className='container'>
             <div className={updateMode && 'consultation-input-container'}><b>Дисциплина: &nbsp;</b>{
@@ -237,7 +295,43 @@ export const Consultation = () => {
                 }
             </div>
 
-            <div><b>Список записавшихся студентов:</b></div>
+            <div style={{marginTop: '15px'}}>
+                <b>Список записавшихся студентов:</b>
+                <div style={{marginTop: '15px'}}>
+                    {
+                        studentList.length !== 0 &&
+                        <div style={{fontWeight: '500'}} className='consultation-student-row'>
+                            <div>ФИО</div>
+                            <div>Группа</div>
+                            <div>Присутствие</div>
+                            <div>Заметки преподавателя</div>
+                        </div>
+                    }
+                    { 
+                        studentList.map((student, index) => 
+                        <div className='consultation-student-row'>
+                            <div>{student.student}</div>
+                            <div>{student.group}</div>
+                            <div>
+                                <Checkbox
+                                defaultChecked={student.visiting}
+                                disabled={!updateMode}
+                                onChange={() => onClickStudentListVisitingChange(index)}
+                                />
+                            </div>
+                            <div>{
+                                updateMode?
+                                <TextArea 
+                                defaultValue={student.notes}
+                                onChange={(e) => onClickStudentListNotesChange(index, e)}
+                                />:
+                                student.notes
+                            }</div>
+                        </div>
+                        )
+                    }
+                </div>
+            </div>
             
             {
                 user.lecturerID === lecturerID &&

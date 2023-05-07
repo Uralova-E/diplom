@@ -505,20 +505,30 @@ class StudentrecordListConsultationView(generics.ListAPIView):
         consultations = list(range(list_length))
 
         for i in range(list_length):
-
             student = consultations_db[i].studentid
             student_group = student.groupid
+
             consultations[i] = {
-                'student': f'{student.last_name_student} {student.first_name_student} {student.patronymic_student}',
-                'group': student_group.number_of_group,
-                'visiting': consultations_db[i].visiting,
-                'notes': consultations_db[i].notes_of_lecturer
+                "recordid": consultations_db[i].student_recordid,
+                "studentid": student.studentid,
+                "student": f'{student.last_name_student} {student.first_name_student} {student.patronymic_student}',
+                "group": student_group.number_of_group,
+                "visiting": consultations_db[i].visiting,
+                "notes": consultations_db[i].notes_of_lecturer
             }
 
-        consultations = ConsultationStudentSerializer(data=consultations)
-        if consultations.is_valid():
+        data = ConsultationStudentSerializer(data={
+            "recordid": 1,
+            "studentid": 1,
+            "student": "hello",
+            "group": "hello",
+            "visiting": True,
+            "notes": "hello"
+        })
+
+        if data.is_valid():
             return consultations
-        return consultations.errors
+        return data.errors
 
 
 class StudentrecordRetrieveView(generics.RetrieveUpdateDestroyAPIView):

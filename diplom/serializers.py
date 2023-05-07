@@ -1,3 +1,5 @@
+from abc import ABC
+
 from rest_framework.serializers import ModelSerializer
 from rest_framework.relations import SlugRelatedField
 from rest_framework import serializers
@@ -144,6 +146,8 @@ class ConsultationSerializer(ModelSerializer):
 
 
 class ConsultationStudentSerializer(serializers.Serializer):
+    recordid = serializers.IntegerField()
+    studentid = serializers.IntegerField()
     student = serializers.CharField()
     group = serializers.CharField()
     visiting = serializers.BooleanField()
