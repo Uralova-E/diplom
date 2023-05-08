@@ -2,14 +2,14 @@
 <html lang="ru">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTExIDc5LjE1ODMyNSwgMjAxNS8wOS8xMC0wMToxMDoyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjk1MDNBRDMyRkZERjExRTlCOEMwQjVGNDg0OUI3M0M4IiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjk1MDNBRDMzRkZERjExRTlCOEMwQjVGNDg0OUI3M0M4Ij4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6OTUwM0FEMzBGRkRGMTFFOUI4QzBCNUY0ODQ5QjczQzgiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6OTUwM0FEMzFGRkRGMTFFOUI4QzBCNUY0ODQ5QjczQzgiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7+YMFlAAAAM1BMVEX///91q9h3rdlMitBKidBpodZXk9JaltNspNdlntVUkdJemdRim9RRjtFyqdhOjNFvptdOVv9kAAAAZklEQVR42lyOSQ4EIQzEahYIO/z/tR2D1AdKsVPKAaH/Ff2uaE4R9zz03jm4KU4pRe9AjBG2BWYmOzZBrdWfwBSnteYHTHFyzsrHWRBCgG1BSknvwFqLjx2zxtht7I0/V/S98ggwAOwPBT+r7x0rAAAAAElFTkSuQmCC" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
       content="Web site created using create-react-app"
     />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="shortcut icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTExIDc5LjE1ODMyNSwgMjAxNS8wOS8xMC0wMToxMDoyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjk1MDNBRDMyRkZERjExRTlCOEMwQjVGNDg0OUI3M0M4IiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjk1MDNBRDMzRkZERjExRTlCOEMwQjVGNDg0OUI3M0M4Ij4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6OTUwM0FEMzBGRkRGMTFFOUI4QzBCNUY0ODQ5QjczQzgiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6OTUwM0FEMzFGRkRGMTFFOUI4QzBCNUY0ODQ5QjczQzgiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7+YMFlAAAAM1BMVEX///91q9h3rdlMitBKidBpodZXk9JaltNspNdlntVUkdJemdRim9RRjtFyqdhOjNFvptdOVv9kAAAAZklEQVR42lyOSQ4EIQzEahYIO/z/tR2D1AdKsVPKAaH/Ff2uaE4R9zz03jm4KU4pRe9AjBG2BWYmOzZBrdWfwBSnteYHTHFyzsrHWRBCgG1BSknvwFqLjx2zxtht7I0/V/S98ggwAOwPBT+r7x0rAAAAAElFTkSuQmCC">
     <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
@@ -24,7 +24,7 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>React App</title>
+    <title>Консультации</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
