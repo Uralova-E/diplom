@@ -5,6 +5,7 @@ import { baseURL } from '../../variables'
 import { useEffect, useState } from 'react';
 import { user } from '../../user';
 import { useNavigate, useParams } from 'react-router-dom';
+import { sortByField } from '../../utils/sortByField';
 
 const ConsultationList = () => {
     const { lecturerID } = useParams();
@@ -18,7 +19,10 @@ const ConsultationList = () => {
     useEffect(() => {
         axios.get(`${baseURL}consultation/lecturer/list/${lecturerID}`).then(
             response => {
-                response.data.map((item) => {
+                const consultations = response.data
+                .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()) 
+                
+                consultations.map((item) => {
                     const day = item.date.split('-')[2]
                     const month = item.date.split('-')[1]-1
                     const year = item.date.split('-')[0]
@@ -31,6 +35,8 @@ const ConsultationList = () => {
                     }
                 })
     })}, [])
+
+
 
     return <div className='container'>
         <div className='title'>
