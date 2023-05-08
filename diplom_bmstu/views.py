@@ -450,6 +450,16 @@ class ConsultationLecturerListView(generics.ListAPIView):
         return Consultation.objects.filter(lecturerid=lecturerID)
 
 
+class ConsultationLecturerGroupListView(generics.ListAPIView):
+    serializer_class = ConsultationSerializer
+#    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        lecturerID = self.kwargs['lecturerID']
+        groupID = self.kwargs['groupID']
+        return Consultation.objects.filter(lecturerid=lecturerID).filter(groupid=groupID)
+
+
 class ConsultationRetrieveView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ConsultationPostPutDeleteSerializer
 

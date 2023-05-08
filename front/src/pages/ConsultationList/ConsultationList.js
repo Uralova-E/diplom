@@ -6,6 +6,8 @@ import { useEffect, useState } from 'react';
 import { user } from '../../user';
 import { useNavigate, useParams } from 'react-router-dom';
 import { sortByField } from '../../utils/sortByField';
+import { Dropdown } from 'semantic-ui-react';
+import { GetGroupOptions } from '../../utils/options';
 
 const ConsultationList = () => {
     const { lecturerID } = useParams();
@@ -15,6 +17,30 @@ const ConsultationList = () => {
     const [consultationsPrev, setConsultationsPrev] = useState([])
 
     const [consultationsPrevIsVisible, setConsultationsPrevIsVisible] = useState(false)
+
+    const groupOptions = GetGroupOptions()
+
+    const hangleChangeGroup = (groupID) => {
+        axios.get(`${baseURL}consultation/lecturer/list/${lecturerID}/${groupID}`).then(
+            response => {
+                setConsultationsNext([])
+                setConsultationsPrev([])
+                const consultations = response.data
+                .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()) 
+                
+                consultations.map((item) => {
+                    const day = item.date.split('-')[2]
+                    const month = item.date.split('-')[1]-1
+                    const year = item.date.split('-')[0]
+                    const hours = item.start_time.split(':')[0]
+                    const min = item.start_time.split(':')[1]
+                    if( new Date(year, month, day, hours, min).getTime() > new Date().getTime()) {
+                        setConsultationsNext(consultationsNext => [...consultationsNext, item])
+                    } else {
+                        setConsultationsPrev(consultationsPrev => [...consultationsPrev, item])
+                    }
+                })
+    })}
 
     useEffect(() => {
         axios.get(`${baseURL}consultation/lecturer/list/${lecturerID}`).then(
@@ -39,9 +65,20 @@ const ConsultationList = () => {
 
 
     return <div className='container'>
+        <Dropdown
+        placeholder='Выберите группу'
+        style={{marginBottom: '10px'}}
+        fluid
+        search
+        selection
+        options={groupOptions.sort(sortByField('text'))}
+        onChange={(e, value) => hangleChangeGroup(groupOptions[groupOptions.findIndex(el => el.text == value.value)].key)}
+        />
+
         <div className='title'>
             Список запланированных консультаций
         </div>
+
         {
             consultationsNext.length === 0?
             <div className='consultation-text'>
