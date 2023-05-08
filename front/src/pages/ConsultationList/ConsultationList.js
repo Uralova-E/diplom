@@ -20,8 +20,9 @@ const ConsultationList = () => {
 
     const groupOptions = GetGroupOptions()
 
-    const hangleChangeGroup = (groupID) => {
-        axios.get(`${baseURL}consultation/lecturer/list/${lecturerID}/${groupID}`).then(
+
+    const getConsultationList = (url) => {
+        axios.get(url).then(
             response => {
                 setConsultationsNext([])
                 setConsultationsPrev([])
@@ -40,40 +41,38 @@ const ConsultationList = () => {
                         setConsultationsPrev(consultationsPrev => [...consultationsPrev, item])
                     }
                 })
-    })}
+    })
+    }
 
     useEffect(() => {
-        axios.get(`${baseURL}consultation/lecturer/list/${lecturerID}`).then(
-            response => {
-                const consultations = response.data
-                .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()) 
-                
-                consultations.map((item) => {
-                    const day = item.date.split('-')[2]
-                    const month = item.date.split('-')[1]-1
-                    const year = item.date.split('-')[0]
-                    const hours = item.start_time.split(':')[0]
-                    const min = item.start_time.split(':')[1]
-                    if( new Date(year, month, day, hours, min).getTime() > new Date().getTime()) {
-                        setConsultationsNext(consultationsNext => [...consultationsNext, item])
-                    } else {
-                        setConsultationsPrev(consultationsPrev => [...consultationsPrev, item])
-                    }
-                })
-    })}, [])
-
+        getConsultationList(`${baseURL}consultation/lecturer/list/${lecturerID}`)
+    }, [])
 
 
     return <div className='container'>
-        <Dropdown
-        placeholder='Выберите группу'
-        style={{marginBottom: '10px'}}
-        fluid
-        search
-        selection
-        options={groupOptions.sort(sortByField('text'))}
-        onChange={(e, value) => hangleChangeGroup(groupOptions[groupOptions.findIndex(el => el.text == value.value)].key)}
-        />
+        <div style={{display: 'flex', marginBottom: '10px'}}>
+            <Dropdown
+            placeholder='Выберите группу'
+            fluid
+            search
+            selection
+            options={groupOptions.sort(sortByField('text'))}
+            onChange={(e, value) => 
+                getConsultationList(`${baseURL}consultation/lecturer/list/${lecturerID}/${groupOptions[groupOptions.findIndex(el => el.text == value.value)].key}`)}
+            />
+
+            <div 
+            onClick={() => getConsultationList(`${baseURL}consultation/lecturer/list/${lecturerID}`)}
+            style={{
+                display: 'flex', 
+                width: '180px',
+                height: '40px',
+                marginLeft: '30px'
+            }}
+            className='button'>
+                Сбросить фильтр
+            </div>
+        </div>
 
         <div className='title'>
             Список запланированных консультаций
