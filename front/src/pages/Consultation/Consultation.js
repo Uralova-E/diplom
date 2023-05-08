@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { Checkbox, Dropdown, Input, TextArea } from 'semantic-ui-react'
+import { Checkbox, Dropdown, Input, Loader, TextArea } from 'semantic-ui-react'
 import { user } from '../../user'
 import { convertDateToYYYYMMDD } from '../../utils/convertDateToYYYYMMDD'
 import { dateNormilize } from '../../utils/dateNormilize'
@@ -42,6 +42,8 @@ export const Consultation = () => {
 
     const [studentList, setStudentList] = useState([])
     const [studentInList, setStudentInList] = useState(false)
+
+    const [loading, setLoading] = useState(true)
 
     const handleClickUpdateConsultation = () => {
         if (updateMode === true) {
@@ -156,6 +158,7 @@ export const Consultation = () => {
     })}
     
     useEffect(() => {
+        setLoading(true)
         axios.get(`${baseURL}consultation/${consultationID}`).then(
             response => {
                 setTopic(response.data.topic)
@@ -177,14 +180,16 @@ export const Consultation = () => {
                 .then((response) => setGroup(response.data.number_of_group))
                 axios.get(`${baseURL}auditorium/${response.data.auditoriumid}`)
                 .then((response) => setAuditorium(response.data.number_of_auditorium))
+
+                axios.get(`${baseURL}studentrecord/list/consultations/${consultationID}`)
+                .then(response => {
+                    setStudentList(response.data)
+                    response.data.map((record) => {
+                        if(record.studentid === user.studentID) setStudentInList(true)
+                    })
+                    setLoading(false)
+                })
             })
-        axios.get(`${baseURL}studentrecord/list/consultations/${consultationID}`)
-        .then(response => {
-            setStudentList(response.data)
-            response.data.map((record) => {
-                if(record.studentid === user.studentID) setStudentInList(true)
-            })
-        })
     }, [])
 
     useEffect(() => {
@@ -196,7 +201,13 @@ export const Consultation = () => {
         .then((response) => setAuditorium(response.data.number_of_auditorium))
     }, [updateMode])
     
-    return (
+    return (<>
+    {
+        loading?
+        <div className='loader-container'>
+            <Loader active inline='centered' />
+        </div>:
+        <>
         <div style={{fontSize: '16px'}} className='container'>
             <div className={updateMode && 'consultation-input-container'}><b>Дисциплина: &nbsp;</b>{
                 updateMode? 
@@ -370,8 +381,10 @@ export const Consultation = () => {
                     Записаться
                 </div>
             }
-        </div>
-    )
+        </div>       
+        </>
+    }
+    </>)
 }
 
 export default Consultation

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Dropdown } from 'semantic-ui-react';
+import { Dimmer, Dropdown, Loader } from 'semantic-ui-react';
 import Faculty from '../../shared/Faculty/Faculty';
 import { sortByField } from '../../utils/sortByField';
 import { baseURL } from '../../variables';
@@ -13,9 +13,12 @@ const LecturersList = () => {
     const [facultyList, setFacultyList] = useState([])
     const [lecturersOption, setLecturersOption] = useState([])
 
+    const [loading, setLoading] = useState(true)
+
     useEffect(() => {
         axios.get(`${baseURL}faculty/list/`).then(response => setFacultyList(response.data))
 
+        setLoading(true)
         axios.get(`${baseURL}lecturers/list/`).then(
             response => {
                 response.data.map((item) => {
@@ -25,6 +28,7 @@ const LecturersList = () => {
                         value: item.last_name_lecturer + ' ' + item.first_name_lecturer + ' ' + item.patronymic_lecturer
                     }])
                 })
+                setLoading(false)
             })
     }, [])
     
@@ -46,6 +50,11 @@ const LecturersList = () => {
                 options={lecturersOption.sort(sortByField('text'))}
             />
             {
+                loading?
+                    <div className='loader-container'>
+                        <Loader active inline='centered' />
+                    </div>
+                :
                 facultyList.map((faculty) => <Faculty faculty={faculty} />)
             }
         </div>

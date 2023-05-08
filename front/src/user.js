@@ -1,5 +1,5 @@
 export const user = {
     userID: 2,
-    lecturerID: null,
+    lecturerID: 2,
     studentID: 4,
 }

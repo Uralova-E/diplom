@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { user } from '../../user';
 import { useNavigate, useParams } from 'react-router-dom';
 import { sortByField } from '../../utils/sortByField';
-import { Dropdown } from 'semantic-ui-react';
+import { Dropdown, Loader } from 'semantic-ui-react';
 import { GetGroupOptions } from '../../utils/options';
 
 const ConsultationList = () => {
@@ -19,9 +19,11 @@ const ConsultationList = () => {
     const [consultationsPrevIsVisible, setConsultationsPrevIsVisible] = useState(false)
 
     const groupOptions = GetGroupOptions()
+    const [loading, setLoading] = useState(true)
 
 
     const getConsultationList = (url) => {
+        setLoading(true)
         axios.get(url).then(
             response => {
                 setConsultationsNext([])
@@ -41,6 +43,7 @@ const ConsultationList = () => {
                         setConsultationsPrev(consultationsPrev => [...consultationsPrev, item])
                     }
                 })
+                setLoading(false)
     })
     }
 
@@ -79,6 +82,10 @@ const ConsultationList = () => {
         </div>
 
         {
+            loading?
+            <div className='loader-container'>
+                <Loader active inline='centered' />
+            </div>:
             consultationsNext.length === 0?
             <div className='consultation-text'>
                 Запланированных консультаций пока нет. 
