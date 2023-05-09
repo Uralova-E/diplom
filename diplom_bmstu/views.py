@@ -1,6 +1,7 @@
 from django.db.migrations import serializer
 from django.shortcuts import get_object_or_404
 from rest_framework import generics, permissions
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -337,7 +338,7 @@ class UsersRetrieveView(generics.RetrieveUpdateDestroyAPIView):
 
 class UserLoginDetailView(generics.RetrieveAPIView):
     serializer_class = UsersPostPutDeleteSerializer
-#    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     lookup_field = ('login')
 
     def get_queryset(self):

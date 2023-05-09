@@ -25,7 +25,11 @@ const Login = () => {
             let lecturerid = ''
             let studentid = ''
             
-            axios.get(`${baseURL}user/${login}`).then(response => {  
+            axios.get(`${baseURL}user/${login}`, {
+                headers: {
+                    'Authorization': `token ${token}`
+                }
+            }).then(response => {  
                 userid = response.data.userid
                 lecturerid = response.data.lecturerid
                 studentid = response.data.studentid
