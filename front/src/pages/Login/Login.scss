@@ -1,0 +1,14 @@
+.login {
+    &-form {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        height: 70vh;
+    }
+
+    &-input {
+        margin-top: 10px !important;
+        width: 290px !important;
+    }
+}

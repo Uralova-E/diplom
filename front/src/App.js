@@ -9,6 +9,7 @@ import ConsultationList from './pages/ConsultationList/ConsultationList';
 import AddConsultation from './pages/AddConsultation/AddConsultation';
 import LecturerList from './pages/LecturersList/LecturersList';
 import Consultation from './pages/Consultation/Consultation';
+import Login from './pages/Login/Login';
 
 function App() {
   const router = createBrowserRouter([
@@ -24,6 +25,13 @@ function App() {
       element: <>
         <Header />
         <ConsultationList />
+      </>
+    },
+    {
+      path: "/login",
+      element: <>
+        <Header />
+        <Login />
       </>
     },
     {

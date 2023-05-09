@@ -87,7 +87,7 @@ const AddConsultation = () => {
             }  
             
             axios.post(`${baseURL}consultation/`, requestData)
-            .then(() => navigate('/consultations'))
+            .then(() => navigate(`/consultations/${user.lecturerID}`))
             .catch(err => console.log(err))
         }
     }

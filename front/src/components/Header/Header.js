@@ -22,7 +22,9 @@ const Header = () => {
             </div>
 
             <div className='header-user-container'>
-                <div className='header-user-icon' />
+                <div 
+                onClick={() => navigate('/login')}
+                className='header-user-icon' />
                 Войти
             </div>
 
