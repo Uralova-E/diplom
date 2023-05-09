@@ -1,13 +1,28 @@
 import './Header.scss'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { user } from '../../user'
+import axios from 'axios'
+import { baseURL } from '../../variables'
 
 const Header = () => {
     const [dropdownIsVisible, setDropdownIsVisible] = useState(false)
     document.onclick = () => {setDropdownIsVisible(false)}
     const navigate = useNavigate()
 
+    const handleClickLogout = () => {
+        localStorage.removeItem('token')
+        localStorage.removeItem('userID')
+        localStorage.removeItem('lecturerID')
+        localStorage.removeItem('username')
+        localStorage.removeItem('studentID')
+        localStorage.removeItem('firstName')
+        localStorage.removeItem('lastName')
+        localStorage.removeItem('patronymic')
+
+        axios.get(`${baseURL}auth/token/logout`)
+        navigate('/')
+    }
+console.log(localStorage)
     return (
         <div className='header'>
             <div 
@@ -21,11 +36,18 @@ const Header = () => {
                 Запись на консультации
             </div>
 
-            <div className='header-user-container'>
+            <div 
+            onClick={() => {
+                if (localStorage.getItem('token') === null) navigate('/login')
+            }}
+            className='header-user-container'>
                 <div 
-                onClick={() => navigate('/login')}
                 className='header-user-icon' />
-                Войти
+                {
+                    localStorage.getItem('token') === null ?
+                    'Войти':
+                    `${localStorage.getItem('lastName')} ${localStorage.getItem('firstName')[0]}.${localStorage.getItem('patronymic')[0]}.`
+                }
             </div>
 
             <div 
@@ -48,8 +70,11 @@ const Header = () => {
                     </a>
                     <a 
                     onClick={() => {
-                        if (user.lecturerID !== null) navigate(`/consultations/${user.lecturerID}`)
-                        else navigate('/lecturers-list')
+                        if (localStorage.getItem('token') === null) navigate('/login') 
+                        else {
+                            if (localStorage.getItem("lecturerID") !== 'null') navigate(`/consultations/${localStorage.lecturerID}`)
+                            else navigate('/lecturers-list')
+                        }
                     }} 
                     className='header-menu-dropdown-item'>
                         Консультации
@@ -60,6 +85,14 @@ const Header = () => {
                     className='header-menu-dropdown-item'>
                         Студенческая почта 
                     </a>
+                    {
+                        localStorage.getItem("token") !== null && 
+                        <a 
+                        className='header-menu-dropdown-item'
+                        onClick={handleClickLogout}>
+                            Выйти
+                        </a>
+                    }
                 </div>
             }
         </div>

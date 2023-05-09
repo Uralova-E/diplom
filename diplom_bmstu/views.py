@@ -335,6 +335,15 @@ class UsersRetrieveView(generics.RetrieveUpdateDestroyAPIView):
         return Response(status=204)
 
 
+class UserLoginDetailView(generics.RetrieveAPIView):
+    serializer_class = UsersPostPutDeleteSerializer
+#    permission_classes = [IsAuthenticated]
+    lookup_field = ('login')
+
+    def get_queryset(self):
+        return Users.objects.all()
+
+
 class UsersPostPutDeleteView(APIView):
     # permission_classes = [permissions.IsAuthenticated]
 

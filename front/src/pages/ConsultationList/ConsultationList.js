@@ -3,7 +3,6 @@ import './ConsultationList.scss'
 import axios from 'axios';
 import { baseURL } from '../../variables'
 import { useEffect, useState } from 'react';
-import { user } from '../../user';
 import { useNavigate, useParams } from 'react-router-dom';
 import { sortByField } from '../../utils/sortByField';
 import { Dropdown, Loader } from 'semantic-ui-react';
@@ -89,14 +88,14 @@ const ConsultationList = () => {
             consultationsNext.length === 0?
             <div className='consultation-text'>
                 Запланированных консультаций пока нет. 
-                { user.lecturerID !== null && 
+                { localStorage.getItem('lecturerID') !== 'null' && 
                 'Чтобы добавить новую консультацию, нажмите на кнопку "Добавить".' }
             </div>:
             <ConsultationsTable consultations={consultationsNext} />
         }
 
         {
-            user.lecturerID !== null &&
+            localStorage.getItem('lecturerID') !== 'null' &&
             <div  
             className='button'
             onClick={() => {navigate('/add-consultation')}}> 

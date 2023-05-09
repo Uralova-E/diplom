@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react'
 import './AddConsultation.scss'
 import { Dropdown, Input, TextArea } from 'semantic-ui-react'
-import { getOptions } from '../../utils/getOptions'
 import { sortByField } from '../../utils/sortByField'
-import { user } from '../../user'
 import { timeValidate } from '../../utils/timeValidate'
 import axios from 'axios'
 import { baseURL } from '../../variables'
@@ -35,7 +33,7 @@ const AddConsultation = () => {
     const [auditoriumError, setAuditoriumError] = useState(false)
 
     useEffect(() => {
-        if (user.lecturerID === null) {
+        if (localStorage.getItem('lecturerID') === 'null') {
             navigate('/lecturers-list')
         }
     }, [])
@@ -75,7 +73,7 @@ const AddConsultation = () => {
         if (!error) {
             const requestData = {
                 auditoriumid: selectedAuditorium,
-                lecturerid: user.lecturerID,
+                lecturerid: localStorage.getItem('lecturerID'),
                 topic: selectedTheme,
                 date: selectedDate,
                 start_time: selectedStartTime + ':00+03:00',
@@ -87,7 +85,7 @@ const AddConsultation = () => {
             }  
             
             axios.post(`${baseURL}consultation/`, requestData)
-            .then(() => navigate(`/consultations/${user.lecturerID}`))
+            .then(() => navigate(`/consultations/${localStorage.getItem('lecturerID')}`))
             .catch(err => console.log(err))
         }
     }

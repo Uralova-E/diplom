@@ -2,7 +2,6 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { Checkbox, Dropdown, Input, Loader, TextArea } from 'semantic-ui-react'
-import { user } from '../../user'
 import { convertDateToYYYYMMDD } from '../../utils/convertDateToYYYYMMDD'
 import { dateNormilize } from '../../utils/dateNormilize'
 import { GetAuditoriumOptions, GetDisciplineOptions, GetGroupOptions } from '../../utils/options'
@@ -145,7 +144,7 @@ export const Consultation = () => {
     const handleClickEnroll = () => {
         const requestDataRecord = {
             consultationid: consultationID,
-            studentid: user.studentID,
+            studentid: localStorage.getItem('studentID'),
             visiting: null,
             notes_of_lecturer: ''
         }
@@ -185,7 +184,7 @@ export const Consultation = () => {
                 .then(response => {
                     setStudentList(response.data)
                     response.data.map((record) => {
-                        if(record.studentid === user.studentID) setStudentInList(true)
+                        if(record.studentid === localStorage.getItem('studentID')) setStudentInList(true)
                     })
                     setLoading(false)
                 })
@@ -366,7 +365,7 @@ export const Consultation = () => {
             </div>
             
             {
-                user.lecturerID === lecturerID ?
+                localStorage.getItem('lecturerID') === lecturerID ?
                 <div 
                 style={{marginTop: '15px', marginBottom: '25px'}}
                 onClick={handleClickUpdateConsultation}
