@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { baseURL } from '../../variables'
 import Department from '../Department/Department'
 import './Faculty.scss'
+import { sortByField } from '../../utils/sortByField'
 
 const Faculty = ({ faculty }) => {
     const [departmentList, setDepartmentList] = useState([])
@@ -11,7 +12,7 @@ const Faculty = ({ faculty }) => {
     const handleClickShowDepartments = () => {
         if (departmentList.length === 0) {
             axios.get(`${baseURL}departments/list/${faculty.facultyid}`).then(response => {
-                setDepartmentList(response.data)
+                setDepartmentList(response.data.sort(sortByField('abbreviation')))
             })
             setDepartmentsIsVisible(true)
         } 

@@ -16,7 +16,7 @@ const LecturersList = () => {
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        axios.get(`${baseURL}faculty/list/`).then(response => setFacultyList(response.data))
+        axios.get(`${baseURL}faculty/list/`).then(response => setFacultyList(response.data.sort(sortByField('abbreviated_name_of_faculty'))))
 
         setLoading(true)
         axios.get(`${baseURL}lecturers/list/`).then(

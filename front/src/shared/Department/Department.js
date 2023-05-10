@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { sortByField } from '../../utils/sortByField'
 import { baseURL } from '../../variables'
 import './Department.scss'
 
@@ -13,7 +14,7 @@ const Department = ({ department }) => {
     const handleClickShowLecturers = () => {
         if (lecturerList.length === 0) {
             axios.get(`${baseURL}lecturers/list/${department.departmentid}`).then(response => {
-                setLecturerList(response.data)
+                setLecturerList(response.data.sort(sortByField('last_name_lecturer')))
             })
             setLecturerIsVisible(true)
         } 
