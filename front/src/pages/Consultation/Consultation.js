@@ -365,20 +365,21 @@ export const Consultation = () => {
             </div>
             
             {
-                localStorage.getItem('lecturerID') === lecturerID ?
+                localStorage.getItem('lecturerID') == lecturerID ?
                 <div 
                 style={{marginTop: '15px', marginBottom: '25px'}}
                 onClick={handleClickUpdateConsultation}
                 className='button'>
                     { updateMode? 'Сохранить': 'Редактировать'}
                 </div>:
+                localStorage.getItem('lecturerID') === 'null'?
                 studentInList? <div style={{marginTop: '25px'}}>Вы записаны на эту консультацию</div>:
                 <div 
                 style={{marginTop: '15px'}}
                 onClick={handleClickEnroll}
                 className='button'>
                     Записаться
-                </div>
+                </div>:null
             }
         </div>       
         </>
