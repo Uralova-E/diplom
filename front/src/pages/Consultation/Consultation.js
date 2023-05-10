@@ -184,7 +184,7 @@ export const Consultation = () => {
                 .then(response => {
                     setStudentList(response.data)
                     response.data.map((record) => {
-                        if(record.studentid === localStorage.getItem('studentID')) setStudentInList(true)
+                        if(record.studentid == localStorage.getItem('studentID')) setStudentInList(true)
                     })
                     setLoading(false)
                 })
