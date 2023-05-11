@@ -22,7 +22,7 @@ const Header = () => {
         axios.get(`${baseURL}auth/token/logout`)
         navigate('/')
     }
-console.log(localStorage)
+
     return (
         <div className='header'>
             <div 
@@ -66,7 +66,7 @@ console.log(localStorage)
                     href='https://lks.bmstu.ru/' 
                     target={'_blank'} 
                     className='header-menu-dropdown-item'>
-                        Кабинет обучающегося
+                        Личный кабинет
                     </a>
                     <a 
                     onClick={() => {
@@ -83,8 +83,16 @@ console.log(localStorage)
                     href='https://student.bmstu.ru/' 
                     target={'_blank'} 
                     className='header-menu-dropdown-item'>
-                        Студенческая почта 
+                        Электронная почта 
                     </a>
+                    {
+                        localStorage.getItem("token") === '123' && 
+                        <a 
+                        className='header-menu-dropdown-item'
+                        onClick={() => navigate('/admin')}>
+                            Панель администратора
+                        </a>
+                    }                    
                     {
                         localStorage.getItem("token") !== null && 
                         <a 

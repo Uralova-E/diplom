@@ -10,6 +10,7 @@ import AddConsultation from './pages/AddConsultation/AddConsultation';
 import LecturerList from './pages/LecturersList/LecturersList';
 import Consultation from './pages/Consultation/Consultation';
 import Login from './pages/Login/Login';
+import AdminPanel from './pages/AdminPanel/AdminPanel';
 
 function App() {
   const router = createBrowserRouter([
@@ -53,6 +54,13 @@ function App() {
       element: <>
         <Header />
         <LecturerList />
+      </>
+    },
+    {
+      path: "/admin",
+      element: <>
+        <Header />
+        <AdminPanel />
       </>
     }
   ])
