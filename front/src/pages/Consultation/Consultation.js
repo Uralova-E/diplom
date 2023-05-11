@@ -374,6 +374,7 @@ export const Consultation = () => {
                 </div>:
                 localStorage.getItem('lecturerID') === 'null'?
                 studentInList? <div style={{marginTop: '25px'}}>Вы записаны на эту консультацию</div>:
+                localStorage.getItem('studentID') !== 'null'&&
                 <div 
                 style={{marginTop: '15px'}}
                 onClick={handleClickEnroll}
