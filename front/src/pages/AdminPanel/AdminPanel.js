@@ -23,7 +23,11 @@ const AdminPanel = () => {
                     <div className='admin-panel-button'>Кафедра</div>
                     <div className='admin-panel-button'>Консультация</div>
                     <div className='admin-panel-button'>Корпус</div>
-                    <div className='admin-panel-button'>Преподаватель</div>
+                    <div 
+                    onClick={() => navigate('/lecturer-table')}
+                    className='admin-panel-button'>
+                        Преподаватель
+                    </div>
                     <div className='admin-panel-button'>Студент</div>
                     <div className='admin-panel-button'>Тип аудитории</div>
                     <div className='admin-panel-button'>Факультет</div>

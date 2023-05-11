@@ -33,6 +33,8 @@ urlpatterns = [
      path('faculty/', FacultyPostPutDeleteView.as_view()),
      path('positions/<int:pk>', PositionsRetrieveView.as_view()),
      path('positions/', PositionsPostPutDeleteView.as_view()),
+     path('positions/list', PositionsListView.as_view()),
+     path('departments/list/', DepartmentsListView.as_view()),
      path('departments/list/<int:facultyID>', DepartmentsListFacultyView.as_view()),
      path('department/<int:pk>', DepartmentRetrieveView.as_view()),
      path('department/', DepartmentPostPutDeleteView.as_view()),

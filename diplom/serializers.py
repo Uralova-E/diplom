@@ -8,9 +8,9 @@ from diplom_bmstu.models import *
 
 
 class LecturerSerializer(ModelSerializer):
-    positionid = SlugRelatedField(slug_field='title_of_position', read_only=True)
-    facultyid = SlugRelatedField(slug_field='title_of_faculty', read_only=True)
-    departmentid = SlugRelatedField(slug_field='title_of_department', read_only=True)
+    # positionid = SlugRelatedField(slug_field='title_of_position', read_only=True)
+    # facultyid = SlugRelatedField(slug_field='title_of_faculty', read_only=True)
+    # departmentid = SlugRelatedField(slug_field='title_of_department', read_only=True)
 
     class Meta:
         model = Lecturer

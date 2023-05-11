@@ -8,6 +8,24 @@ from rest_framework.views import APIView
 from diplom.serializers import *
 
 
+class DepartmentsListView(generics.ListAPIView):
+    serializer_class = DepartmentPostPutDeleteSerializer
+
+    # permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return Department.objects.all()
+
+
+class PositionsListView(generics.ListAPIView):
+    serializer_class = PositionsPostPutDeleteSerializer
+
+    # permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return Positions.objects.all()
+
+
 class LecturerListView(generics.ListAPIView):
     serializer_class = LecturerSerializer
 

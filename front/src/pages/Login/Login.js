@@ -20,9 +20,9 @@ const Login = () => {
                 userid: 0,
                 lecturerid: 'null', 
                 studentid: 'null',
-                firstName: 'Екатерина',
-                lastName: 'Уралова',
-                patronymic: 'Алексеевна'
+                firstName: 'Иван',
+                lastName: 'Иванов',
+                patronymic: 'Иванович'
             }
             
             setLocalStorage(data) 

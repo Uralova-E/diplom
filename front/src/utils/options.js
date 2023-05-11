@@ -45,3 +45,33 @@ export const GetAuditoriumOptions = () => {
 
     return auditoriumOptions;
 }
+
+export const GetDepartmentOptions = () => {
+    const [departmentOptions, setDepartmentOptions] = useState([])
+
+    useEffect(() => {
+        getOptions(
+            'departments/list/', 
+            setDepartmentOptions, 
+            'departmentid',
+            'abbreviation',
+            'abbreviation')
+    }, [])
+
+    return departmentOptions;
+}
+
+export const GetPositionOptions = () => {
+    const [positionOptions, setPositionOptions] = useState([])
+
+    useEffect(() => {
+        getOptions(
+            'positions/list', 
+            setPositionOptions, 
+            'positionid',
+            'title_of_position',
+            'title_of_position')
+    }, [])
+
+    return positionOptions;
+}
