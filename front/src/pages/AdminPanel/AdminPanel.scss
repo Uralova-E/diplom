@@ -1,0 +1,24 @@
+.admin-panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 900px;
+
+    &-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 70vh;       
+    }
+
+    &-button {
+        border: 1px solid #446E9B;
+        border-radius: 50px;
+        text-align: center;
+        padding: 20px;
+        cursor: pointer;
+        width: 200px;
+        margin: 10px;
+    }
+}
