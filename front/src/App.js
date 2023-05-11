@@ -12,6 +12,7 @@ import Consultation from './pages/Consultation/Consultation';
 import Login from './pages/Login/Login';
 import AdminPanel from './pages/AdminPanel/AdminPanel';
 import LecturerTable from './pages/LecturerTable/LecturerTable';
+import AddLecturer from './pages/LecturerTable/components/LecturerTableRow/AddLecturer/AddLecturer';
 
 function App() {
   const router = createBrowserRouter([
@@ -69,6 +70,13 @@ function App() {
       element: <>
         <Header />
         <LecturerTable />
+      </>
+    },
+    {
+      path: "/add-lecturer",
+      element: <>
+        <Header />
+        <AddLecturer />
       </>
     }
   ])

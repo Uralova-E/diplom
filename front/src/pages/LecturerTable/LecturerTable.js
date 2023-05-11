@@ -1,16 +1,17 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import { GetDepartmentOptions, GetPositionOptions } from '../../utils/options'
+import { useNavigate } from 'react-router-dom'
 import { baseURL } from '../../variables'
+import LecturerTableRow from './components/LecturerTableRow/LecturerTableRow'
 import './LecturerTable.scss'
 
 const LecturerTable = () => {
     const [lecturerList, setLecturerList] = useState([])
-    const departmentOptions = GetDepartmentOptions()
-    const positionOptions = GetPositionOptions()
+    const navigate = useNavigate()
 
     useEffect(() => {
-        axios.get(`${baseURL}lecturers/list/`).then(response =>
+        if (localStorage.getItem('token') !== '123') navigate('/')
+        else axios.get(`${baseURL}lecturers/list/`).then(response =>
             setLecturerList(response.data)
             )
     }, [])
@@ -23,21 +24,19 @@ const LecturerTable = () => {
                 <div className='lecturer-table-cell'>Фамилия</div>
                 <div className='lecturer-table-cell'>Имя</div>
                 <div className='lecturer-table-cell'>Отчество</div>
+                <div style={{width: '160px'}}></div>
             </div>
             {
                 lecturerList.map((lecturer) => 
-                    <div className='lecturer-table-row'>
-                    <div className='lecturer-table-cell'>{departmentOptions.filter(el => el.key === lecturer.departmentid)[0].text}</div>
-                    <div className='lecturer-table-cell'>{positionOptions.filter(el => el.key === lecturer.positionid)[0].text}</div>
-                    <div className='lecturer-table-cell'>{lecturer.last_name_lecturer}</div>
-                    <div className='lecturer-table-cell'>{lecturer.first_name_lecturer}</div>
-                    <div className='lecturer-table-cell'>{lecturer.patronymic_lecturer}</div>
-                </div>
+                    <LecturerTableRow lecturer={lecturer} />
                 )
             }
             <div 
-            style={{marginTop: '15px'}}
-            className='button'>Редактировать</div>
+            onClick={() => navigate('/add-lecturer')}
+            style={{marginTop: '20px'}}
+            className='button'>
+                Добавить преподавателя
+            </div>
         </div>
     )
 }
