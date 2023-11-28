@@ -1,0 +1,9 @@
+.menu {
+    width: 100%; 
+    height: 52px;
+    background-color: #446E9B;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

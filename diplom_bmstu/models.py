@@ -24,6 +24,38 @@ class StudentRecord(models.Model):
     visiting = models.CharField(db_column='Visiting', max_length=3, blank=True, null=True)  # Field name made lowercase.
     notes_of_lecturer = models.CharField(db_column='Notes_of_lecturer', max_length=400, blank=True, null=True)  # Field name made lowercase.
 
+    def getByStudentRecordId(consultationid):
+        consultations_db = StudentRecord.objects.all().filter(consultationid=consultationid)
+        list_length = len(consultations_db)
+        consultations = list(range(list_length))
+
+        for i in range(list_length):
+            student = consultations_db[i].studentid
+            student_group = student.groupid
+
+            consultations[i] = {
+                "recordid": consultations_db[i].student_recordid,
+                "studentid": student.studentid,
+                "student": f'{student.last_name_student} {student.first_name_student} {student.patronymic_student}',
+                "group": student_group.number_of_group,
+                "visiting": consultations_db[i].visiting,
+                "notes": consultations_db[i].notes_of_lecturer
+            }
+        return consultations
+    #
+    #     data = ConsultationStudentSerializer(data={
+    #             "recordid": 1,
+    #             "studentid": 1,
+    #             "student": "hello",
+    #             "group": "hello",
+    #             "visiting": True,
+    #             "notes": "hello"
+    #         })
+    #
+    # if data.is_valid():
+    #     return consultations
+    # return data.errors
+    #
     class Meta:
         managed = False
         db_table = 'Student record'
@@ -47,6 +79,9 @@ class Auditorium(models.Model):
     university_buildingid = models.ForeignKey('UniversityBuilding', models.DO_NOTHING, db_column='university_buildingid')
     number_of_auditorium = models.CharField(max_length=8)
     capacity = models.IntegerField()
+
+    def getAuditorium(self):
+        return Auditorium.objects.all()
 
     class Meta:
         managed = False
@@ -145,6 +180,32 @@ class Consultation(models.Model):
     notes = models.CharField(db_column='Notes', max_length=400, blank=True, null=True)  # Field name made lowercase.
     disciplineid = models.ForeignKey('Discipline', models.DO_NOTHING, db_column='disciplineID', blank=True, null=True)  # Field name made lowercase.
 
+    def update(self, data):
+        return Consultation.save(data)
+
+    def create(self, data):
+        return Consultation.save(data)
+
+
+    @staticmethod
+    def delete(id):
+        pass
+
+    @staticmethod
+    def getByLecturerId(id):
+        return Consultation.objects.filter(lecturerid=id)
+
+    @staticmethod
+    def getById(id):
+        return Consultation.objects.filter(consultationid=id)
+
+    @staticmethod
+    def getConsultation():
+        return Consultation.objects.all()
+
+    def getByLecturerGroupId(lecturerid, groupid):
+        return Consultation.objects.filter(lecturerid=lecturerid).filter(groupid=groupid)
+
     class Meta:
         managed = False
         db_table = 'consultation'
@@ -164,6 +225,9 @@ class Department(models.Model):
 class Discipline(models.Model):
     disciplineid = models.BigIntegerField(db_column='disciplineID', primary_key=True)  # Field name made lowercase.
     name_of_discipline = models.CharField(db_column='Name_of_discipline', max_length=300)  # Field name made lowercase.
+
+    def getDiscipline(self):
+        return Discipline.objects.all()
 
     class Meta:
         managed = False
@@ -230,6 +294,9 @@ class Groups(models.Model):
     number_of_group = models.CharField(db_column='Number_of_group', max_length=10)  # Field name made lowercase.
     departmentid = models.ForeignKey(Department, models.DO_NOTHING, db_column='departmentID')  # Field name made lowercase.
     year_of_entry = models.IntegerField(db_column='Year_of_entry')  # Field name made lowercase.
+
+    def getGroups(self):
+        return Groups.objects.all()
 
     class Meta:
         managed = False

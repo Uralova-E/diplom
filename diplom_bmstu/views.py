@@ -84,7 +84,11 @@ class AuditoriumListView(generics.ListAPIView):
     # permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return Auditorium.objects.all()
+        auditorium = Auditorium.getAuditorium(self)
+        return auditorium
+
+    # def get_queryset(self):
+    #     return Auditorium.objects.all()
 
 
 class AuditoriumRetrieveView(generics.RetrieveUpdateDestroyAPIView):
@@ -93,16 +97,20 @@ class AuditoriumRetrieveView(generics.RetrieveUpdateDestroyAPIView):
     # permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return Auditorium.objects.all()
+        auditorium = Auditorium.getAuditorium(self)
+        return auditorium
 
-    def put_queryset(self, request):
-        auditorium = Auditorium
-        serializer = AuditoriumPostPutDeleteSerializer(auditorium, data=request.data)
-
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=400)
+    # def get_queryset(self):
+    #     return Auditorium.objects.all()
+    #
+    # def put_queryset(self, request):
+    #     auditorium = Auditorium
+    #     serializer = AuditoriumPostPutDeleteSerializer(auditorium, data=request.data)
+    #
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data)
+    #     return Response(serializer.errors, status=400)
 
 
 class AuditoriumPostPutDeleteView(APIView):
@@ -228,29 +236,37 @@ class GroupsListView(generics.ListAPIView):
     # permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return Groups.objects.all()
+        groups = Groups.getGroups(self)
+        return groups
+
+    # def get_queryset(self):
+    #     return Groups.objects.all()
 
 
 class GroupsRetrieveView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = GroupsPostPutDeleteSerializer
 
-    # permission_classes = [permissions.IsAuthenticated]
     def get_queryset(self):
-        return Groups.objects.all()
+        groups = Groups.getGroups(self)
+        return groups
 
-    def put_queryset(self, request):
-        groups = Groups
-        serializer = GroupsPostPutDeleteSerializer(groups, data=request.data)
+    # permission_classes = [permissions.IsAuthenticated]
+    # def get_queryset(self):
+    #     return Groups.objects.all()
 
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=400)
-
-    def delete_queryset(self, request):
-        groups = Groups.objects.all()
-        groups.delete()
-        return Response(status=204)
+    # def put_queryset(self, request):
+    #     groups = Groups
+    #     serializer = GroupsPostPutDeleteSerializer(groups, data=request.data)
+    #
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data)
+    #     return Response(serializer.errors, status=400)
+    #
+    # def delete_queryset(self, request):
+    #     groups = Groups.objects.all()
+    #     groups.delete()
+    #     return Response(status=204)
 
 
 class GroupsPostPutDeleteView(APIView):
@@ -423,29 +439,37 @@ class DisciplineListView(generics.ListAPIView):
     # permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return Discipline.objects.all()
+        discipline = Discipline.getDiscipline(self)
+        return discipline
+
+    # def get_queryset(self):
+    #     return Discipline.objects.all()
 
 
 class DisciplineRetrieveView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = DisciplinePostPutDeleteSerializer
 
-    # permission_classes = [permissions.IsAuthenticated]
     def get_queryset(self):
-        return Discipline.objects.all()
+        discipline = Discipline.getDiscipline(self)
+        return discipline
 
-    def put_queryset(self, request):
-        discipline = Discipline.objects.all()
-        serializer = DisciplinePostPutDeleteSerializer(discipline, data=request.data)
-
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=400)
-
-    def delete_queryset(self, request):
-        discipline = Discipline.objects.all()
-        discipline.delete()
-        return Response(status=204)
+    # permission_classes = [permissions.IsAuthenticated]
+    # def get_queryset(self):
+    #     return Discipline.objects.all()
+    #
+    # def put_queryset(self, request):
+    #     discipline = Discipline.objects.all()
+    #     serializer = DisciplinePostPutDeleteSerializer(discipline, data=request.data)
+    #
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data)
+    #     return Response(serializer.errors, status=400)
+    #
+    # def delete_queryset(self, request):
+    #     discipline = Discipline.objects.all()
+    #     discipline.delete()
+    #     return Response(status=204)
 
 
 class DisciplinePostPutDeleteView(APIView):
@@ -464,18 +488,26 @@ class ConsultationListView(generics.ListAPIView):
     serializer_class = ConsultationSerializer
 
     # permission_classes = [permissions.IsAuthenticated]
-
     def get_queryset(self):
-        return Consultation.objects.all()
+        consultations = Consultation.getConsultation(self)
+        return consultations
+
+    # def get_queryset(self):
+    #     return Consultation.objects.all()
 
 
 class ConsultationLecturerListView(generics.ListAPIView):
     serializer_class = ConsultationSerializer
-#    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        lecturerID = self.kwargs['lecturerID']
-        return Consultation.objects.filter(lecturerid=lecturerID)
+        consultations = Consultation.getByLecturerId(self.kwargs['lecturerID'])
+        return consultations
+
+#    permission_classes = [IsAuthenticated]
+
+    # def get_queryset(self):
+    #     lecturerID = self.kwargs['lecturerID']
+    #     return Consultation.objects.filter(lecturerid=lecturerID)
 
 
 class ConsultationLecturerGroupListView(generics.ListAPIView):
@@ -483,26 +515,44 @@ class ConsultationLecturerGroupListView(generics.ListAPIView):
 #    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        lecturerID = self.kwargs['lecturerID']
-        groupID = self.kwargs['groupID']
-        return Consultation.objects.filter(lecturerid=lecturerID).filter(groupid=groupID)
+        consultations = Consultation.getByLecturerGroupId(self.kwargs['lecturerID'], self.kwargs['groupID'])
+        return consultations
+
+    # def get_queryset(self):
+    #     lecturerID = self.kwargs['lecturerID']
+    #     groupID = self.kwargs['groupID']
+    #     return Consultation.objects.filter(lecturerid=lecturerID).filter(groupid=groupID)
 
 
 class ConsultationRetrieveView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ConsultationPostPutDeleteSerializer
 
     # permission_classes = [permissions.IsAuthenticated]
+
     def get_queryset(self):
-        return Consultation.objects.all()
+        consultations = Consultation.getConsultation()
+        return consultations
+
+    # def get_queryset(self):
+    #     return Consultation.objects.all()
 
     def put_queryset(self, request):
-        consultation = Consultation.objects.all()
-        serializer = ConsultationPostPutDeleteSerializer(consultation, data=request.data)
+        consultations = Consultation.getConsultation()
+        serializer = ConsultationPostPutDeleteSerializer(consultations, data=request.data)
 
         if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
+            consultation = Consultation.update(serializer.data)
+            return consultation
         return Response(serializer.errors, status=400)
+
+    # def put_queryset(self, request):
+    #     consultation = Consultation.objects.all()
+    #     serializer = ConsultationPostPutDeleteSerializer(consultation, data=request.data)
+    #
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data)
+    #     return Response(serializer.errors, status=400)
 
     def delete_queryset(self, request):
         consultation = Consultation.objects.all()
@@ -512,6 +562,14 @@ class ConsultationRetrieveView(generics.RetrieveUpdateDestroyAPIView):
 
 class ConsultationPostPutDeleteView(APIView):
     # permission_classes = [permissions.IsAuthenticated]
+
+    # def post(self, request):
+    #     consultation = ConsultationPostPutDeleteSerializer(data=request.data)
+    #
+    #     if consultation.is_valid():
+    #         Consultation.create(consultation.data)
+    #         return Response(status=200)
+    #     return Response(consultation.errors, status=400)
 
     def post(self, request):
         consultation = ConsultationPostPutDeleteSerializer(data=request.data)
@@ -537,23 +595,27 @@ class StudentrecordListConsultationView(generics.ListAPIView):
     # permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        consultationID = self.kwargs['consultationID']
-        consultations_db = StudentRecord.objects.all().filter(consultationid=consultationID)
-        list_length = len(consultations_db)
-        consultations = list(range(list_length))
+        consultations = StudentRecord.getByStudentRecordId(self.kwargs['consultationID'])
+        # return consultations
 
-        for i in range(list_length):
-            student = consultations_db[i].studentid
-            student_group = student.groupid
-
-            consultations[i] = {
-                "recordid": consultations_db[i].student_recordid,
-                "studentid": student.studentid,
-                "student": f'{student.last_name_student} {student.first_name_student} {student.patronymic_student}',
-                "group": student_group.number_of_group,
-                "visiting": consultations_db[i].visiting,
-                "notes": consultations_db[i].notes_of_lecturer
-            }
+    # def get_queryset(self):
+    #     consultationID = self.kwargs['consultationID']
+    #     consultations_db = StudentRecord.objects.all().filter(consultationid=consultationID)
+    #     list_length = len(consultations_db)
+    #     consultations = list(range(list_length))
+    #
+    #     for i in range(list_length):
+    #         student = consultations_db[i].studentid
+    #         student_group = student.groupid
+    #
+    #         consultations[i] = {
+    #             "recordid": consultations_db[i].student_recordid,
+    #             "studentid": student.studentid,
+    #             "student": f'{student.last_name_student} {student.first_name_student} {student.patronymic_student}',
+    #             "group": student_group.number_of_group,
+    #             "visiting": consultations_db[i].visiting,
+    #             "notes": consultations_db[i].notes_of_lecturer
+    #         }
 
         data = ConsultationStudentSerializer(data={
             "recordid": 1,

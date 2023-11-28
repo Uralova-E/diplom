@@ -1,0 +1,25 @@
+.main-page {
+    padding: 82px;
+}
+
+.main-page-header {
+    font-family: 'Blinker';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 38px;
+    margin-bottom: 24px;
+    
+    color: #000000;
+}
+
+.main-page-text {
+    width: 1000px;
+    font-family: 'Blinker';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 29px;
+    
+    color: #000000;
+}
