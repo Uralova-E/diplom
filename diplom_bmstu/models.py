@@ -178,13 +178,27 @@ class Consultation(models.Model):
     groupid = models.ForeignKey('Groups', models.DO_NOTHING, db_column='groupid')
     was_conducted = models.CharField(db_column='Was_conducted', max_length=3, blank=True, null=True)  # Field name made lowercase.
     notes = models.CharField(db_column='Notes', max_length=400, blank=True, null=True)  # Field name made lowercase.
-    disciplineid = models.ForeignKey('Discipline', models.DO_NOTHING, db_column='disciplineID', blank=True, null=True)  # Field name made lowercase.
+    disciplineid = models.ForeignKey('Discipline', models.DO_NOTHING, db_column='disciplineID', blank=True, null=True)
 
-    def update(self, data):
+    @staticmethod
+    def update(data):
         return Consultation.save(data)
 
-    def create(self, data):
-        return Consultation.save(data)
+    @staticmethod
+    def create(data):
+        new_consultation = Consultation.objects.create(
+            auditoriumid=Auditorium(data['auditoriumid']),
+            lecturerid=Lecturer(data['lecturerid']),
+            topic=data['topic'],
+            date=data['date'],
+            start_time=data['start_time'],
+            end_time=data['end_time'],
+            groupid=Groups(data['groupid']),
+            was_conducted=data['was_conducted'],
+            notes=data['notes'],
+            disciplineid=Discipline(data['disciplineid'])
+        )
+        return new_consultation
 
 
     @staticmethod
@@ -203,6 +217,7 @@ class Consultation(models.Model):
     def getConsultation():
         return Consultation.objects.all()
 
+    @staticmethod
     def getByLecturerGroupId(lecturerid, groupid):
         return Consultation.objects.filter(lecturerid=lecturerid).filter(groupid=groupid)
 

@@ -563,21 +563,21 @@ class ConsultationRetrieveView(generics.RetrieveUpdateDestroyAPIView):
 class ConsultationPostPutDeleteView(APIView):
     # permission_classes = [permissions.IsAuthenticated]
 
-    # def post(self, request):
-    #     consultation = ConsultationPostPutDeleteSerializer(data=request.data)
-    #
-    #     if consultation.is_valid():
-    #         Consultation.create(consultation.data)
-    #         return Response(status=200)
-    #     return Response(consultation.errors, status=400)
-
     def post(self, request):
         consultation = ConsultationPostPutDeleteSerializer(data=request.data)
 
         if consultation.is_valid():
-            consultation.save()
+            Consultation.create(request.data)
             return Response(status=200)
         return Response(consultation.errors, status=400)
+
+    # def post(self, request):
+    #     consultation = ConsultationPostPutDeleteSerializer(data=request.data)
+    #
+    #     if consultation.is_valid():
+    #         consultation.save()
+    #         return Response(status=200)
+    #     return Response(consultation.errors, status=400)
 
 
 class StudentrecordListView(generics.ListAPIView):
