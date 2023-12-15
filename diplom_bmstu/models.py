@@ -1,11 +1,3 @@
-# This is an auto-generated Django model module.
-# You'll have to do the following manually to clean this up:
-#   * Rearrange models' order
-#   * Make sure each model has one field with primary_key=True
-#   * Make sure each ForeignKey and OneToOneField has `on_delete` set to the desired behavior
-#   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
-# Feel free to rename the models, but don't rename db_table values or field names.
-from django.db import models
 
 
 class Positions(models.Model):
@@ -23,6 +15,14 @@ class StudentRecord(models.Model):
     studentid = models.ForeignKey('Students', models.DO_NOTHING, db_column='studentID')  # Field name made lowercase.
     visiting = models.CharField(db_column='Visiting', max_length=3, blank=True, null=True)  # Field name made lowercase.
     notes_of_lecturer = models.CharField(db_column='Notes_of_lecturer', max_length=400, blank=True, null=True)  # Field name made lowercase.
+
+    @staticmethod
+    def getStudentRecord():
+        return StudentRecord.objects.all()
+
+    @staticmethod
+    def update(data):
+        return StudentRecord.save(data)
 
     def getByStudentRecordId(consultationid):
         consultations_db = StudentRecord.objects.all().filter(consultationid=consultationid)
@@ -42,20 +42,7 @@ class StudentRecord(models.Model):
                 "notes": consultations_db[i].notes_of_lecturer
             }
         return consultations
-    #
-    #     data = ConsultationStudentSerializer(data={
-    #             "recordid": 1,
-    #             "studentid": 1,
-    #             "student": "hello",
-    #             "group": "hello",
-    #             "visiting": True,
-    #             "notes": "hello"
-    #         })
-    #
-    # if data.is_valid():
-    #     return consultations
-    # return data.errors
-    #
+
     class Meta:
         managed = False
         db_table = 'Student record'
@@ -200,10 +187,6 @@ class Consultation(models.Model):
         )
         return new_consultation
 
-
-    @staticmethod
-    def delete(id):
-        pass
 
     @staticmethod
     def getByLecturerId(id):

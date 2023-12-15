@@ -533,9 +533,6 @@ class ConsultationRetrieveView(generics.RetrieveUpdateDestroyAPIView):
         consultations = Consultation.getConsultation()
         return consultations
 
-    # def get_queryset(self):
-    #     return Consultation.objects.all()
-
     def put_queryset(self, request):
         consultations = Consultation.getConsultation()
         serializer = ConsultationPostPutDeleteSerializer(consultations, data=request.data)
@@ -544,6 +541,11 @@ class ConsultationRetrieveView(generics.RetrieveUpdateDestroyAPIView):
             consultation = Consultation.update(serializer.data)
             return consultation
         return Response(serializer.errors, status=400)
+
+
+    # def get_queryset(self):
+    #     return Consultation.objects.all()
+
 
     # def put_queryset(self, request):
     #     consultation = Consultation.objects.all()
@@ -598,6 +600,19 @@ class StudentrecordListConsultationView(generics.ListAPIView):
         consultations = StudentRecord.getByStudentRecordId(self.kwargs['consultationID'])
         # return consultations
 
+        data = ConsultationStudentSerializer(data={
+            "recordid": 1,
+            "studentid": 1,
+            "student": "hello",
+            "group": "hello",
+            "visiting": True,
+            "notes": "hello"
+        })
+
+        if data.is_valid():
+            return consultations
+        return data.errors
+
     # def get_queryset(self):
     #     consultationID = self.kwargs['consultationID']
     #     consultations_db = StudentRecord.objects.all().filter(consultationid=consultationID)
@@ -617,35 +632,43 @@ class StudentrecordListConsultationView(generics.ListAPIView):
     #             "notes": consultations_db[i].notes_of_lecturer
     #         }
 
-        data = ConsultationStudentSerializer(data={
-            "recordid": 1,
-            "studentid": 1,
-            "student": "hello",
-            "group": "hello",
-            "visiting": True,
-            "notes": "hello"
-        })
 
-        if data.is_valid():
-            return consultations
-        return data.errors
 
 
 class StudentrecordRetrieveView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = StudentrecordPostPutDeleteSerializer
 
-    # permission_classes = [permissions.IsAuthenticated]
-    def get_queryset(self):
-        return StudentRecord.objects.all()
-
     def put_queryset(self, request):
-        studentrecord = StudentRecord.objects.all()
-        serializer = StudentrecordPostPutDeleteSerializer(studentrecord, data=request.data)
+        studentrecords = StudentRecord.getStudentRecord()
+        serializer = StudentrecordPostPutDeleteSerializer(studentrecords, data=request.data)
 
         if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
+            studentrecord = StudentRecord.update(serializer.data)
+            return studentrecord
         return Response(serializer.errors, status=400)
+
+
+    def get_queryset(self):
+        studentrecord = StudentRecord.getStudentRecord()
+        return studentrecord
+
+    # def get_queryset(self):
+    #     return Consultation.objects.all()
+
+
+
+    # permission_classes = [permissions.IsAuthenticated]
+    # def get_queryset(self):
+    #     return StudentRecord.objects.all()
+    #
+    # def put_queryset(self, request):
+    #     studentrecord = StudentRecord.objects.all()
+    #     serializer = StudentrecordPostPutDeleteSerializer(studentrecord, data=request.data)
+    #
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data)
+    #     return Response(serializer.errors, status=400)
 
     def delete_queryset(self, request):
         studentrecord = StudentRecord.objects.all()
@@ -663,4 +686,5 @@ class StudentrecordPostPutDeleteView(APIView):
             studentrecord.save()
             return Response(status=200)
         return Response(studentrecord.errors, status=400)
+
 
