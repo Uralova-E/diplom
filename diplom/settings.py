@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'diplom_bmstu.apps.DiplomBmstuConfig',
     'rest_framework.authtoken',
     'djoser',
+    'unittest',
     'corsheaders'
 ]
 
@@ -89,14 +90,16 @@ WSGI_APPLICATION = 'diplom.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
+        'NAME': 'katya',
         'USER': 'postgres',
-        'PASSWORD': '12345',
+        'PASSWORD': '123',
         'HOST': 'localhost',
         'PORT': '5432',
     }
 }
 
+TEST_DATABASE_NAME = None
+TEST_MIGRATION_MODULES = ["diplom_bmstu.migrations"]
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators

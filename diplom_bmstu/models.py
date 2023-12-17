@@ -1,4 +1,4 @@
-
+from django.db import models
 
 class Positions(models.Model):
     positionid = models.BigAutoField(db_column='PositionID', primary_key=True)  # Field name made lowercase.
