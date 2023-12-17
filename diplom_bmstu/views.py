@@ -488,8 +488,9 @@ class ConsultationListView(generics.ListAPIView):
     serializer_class = ConsultationSerializer
 
     # permission_classes = [permissions.IsAuthenticated]
-    def get_queryset(self):
-        consultations = Consultation.getConsultation(self)
+    @staticmethod
+    def get_queryset():
+        consultations = ConsultationGateway.getConsultation()
         return consultations
 
     # def get_queryset(self):
@@ -500,7 +501,7 @@ class ConsultationLecturerListView(generics.ListAPIView):
     serializer_class = ConsultationSerializer
 
     def get_queryset(self):
-        consultations = Consultation.getByLecturerId(self.kwargs['lecturerID'])
+        consultations = ConsultationGateway.getByLecturerId(self.kwargs['lecturerID'])
         return consultations
 
 #    permission_classes = [IsAuthenticated]
@@ -515,7 +516,7 @@ class ConsultationLecturerGroupListView(generics.ListAPIView):
 #    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        consultations = Consultation.getByLecturerGroupId(self.kwargs['lecturerID'], self.kwargs['groupID'])
+        consultations = ConsultationGateway.getByLecturerGroupId(self.kwargs['lecturerID'], self.kwargs['groupID'])
         return consultations
 
     # def get_queryset(self):
@@ -530,15 +531,15 @@ class ConsultationRetrieveView(generics.RetrieveUpdateDestroyAPIView):
     # permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        consultations = Consultation.getConsultation()
+        consultations = ConsultationGateway.getConsultation()
         return consultations
 
     def put_queryset(self, request):
-        consultations = Consultation.getConsultation()
+        consultations = ConsultationGateway.getConsultation()
         serializer = ConsultationPostPutDeleteSerializer(consultations, data=request.data)
 
         if serializer.is_valid():
-            consultation = Consultation.update(serializer.data)
+            consultation = ConsultationGateway.update(serializer.data)
             return consultation
         return Response(serializer.errors, status=400)
 
@@ -569,7 +570,7 @@ class ConsultationPostPutDeleteView(APIView):
         consultation = ConsultationPostPutDeleteSerializer(data=request.data)
 
         if consultation.is_valid():
-            Consultation.create(request.data)
+            ConsultationGateway.create(request.data)
             return Response(status=200)
         return Response(consultation.errors, status=400)
 

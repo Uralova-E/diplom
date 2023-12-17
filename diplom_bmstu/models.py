@@ -167,6 +167,11 @@ class Consultation(models.Model):
     notes = models.CharField(db_column='Notes', max_length=400, blank=True, null=True)  # Field name made lowercase.
     disciplineid = models.ForeignKey('Discipline', models.DO_NOTHING, db_column='disciplineID', blank=True, null=True)
 
+    class Meta:
+        managed = False
+        db_table = 'consultation'
+
+class ConsultationGateway:
     @staticmethod
     def update(data):
         return Consultation.save(data)
@@ -204,9 +209,6 @@ class Consultation(models.Model):
     def getByLecturerGroupId(lecturerid, groupid):
         return Consultation.objects.filter(lecturerid=lecturerid).filter(groupid=groupid)
 
-    class Meta:
-        managed = False
-        db_table = 'consultation'
 
 
 class Department(models.Model):
