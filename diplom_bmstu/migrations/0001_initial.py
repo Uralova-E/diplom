@@ -120,7 +120,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 'db_table': 'consultation',
-                'managed': False,
+                # 'managed': False,
             },
         ),
         migrations.CreateModel(
@@ -132,7 +132,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 'db_table': 'department',
-                'managed': False,
+                # 'managed': False,
             },
         ),
         migrations.CreateModel(
@@ -143,7 +143,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 'db_table': 'discipline',
-                'managed': False,
+                # 'managed': False,
             },
         ),
         migrations.CreateModel(
@@ -207,7 +207,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 'db_table': 'faculty',
-                'managed': False,
+                # 'managed': False,
             },
         ),
         migrations.CreateModel(
@@ -216,10 +216,11 @@ class Migration(migrations.Migration):
                 ('groupid', models.BigAutoField(primary_key=True, serialize=False)),
                 ('number_of_group', models.CharField(db_column='Number_of_group', max_length=10)),
                 ('year_of_entry', models.IntegerField(db_column='Year_of_entry')),
+                ('departmentID', models.IntegerField()),
             ],
             options={
                 'db_table': 'groups',
-                'managed': False,
+                # 'managed': False,
             },
         ),
         migrations.CreateModel(
@@ -255,7 +256,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 'db_table': 'Student record',
-                'managed': False,
+                # 'managed': False,
             },
         ),
         migrations.CreateModel(
@@ -266,10 +267,11 @@ class Migration(migrations.Migration):
                 ('first_name_student', models.CharField(max_length=50)),
                 ('patronymic_student', models.CharField(blank=True, max_length=50, null=True)),
                 ('number_of_record_book', models.CharField(max_length=10)),
+                ('groupid', models.IntegerField()),
             ],
             options={
                 'db_table': 'students',
-                'managed': False,
+                # 'managed': False,
             },
         ),
         migrations.CreateModel(

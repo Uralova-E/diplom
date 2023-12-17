@@ -2,12 +2,6 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
-import unittest
-
-from django.template import Engine
-from django.template.backends import django
-
-from tests import StudentsListViewTest
 
 def main():
     """Run administrative tasks."""

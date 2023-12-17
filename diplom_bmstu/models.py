@@ -283,7 +283,7 @@ class Faculty(models.Model):
     abbreviated_name_of_faculty = models.CharField(db_column='Abbreviated_name_of_faculty', max_length=10)  # Field name made lowercase.
 
     class Meta:
-        managed = False
+        # managed = False
         db_table = 'faculty'
 
 
